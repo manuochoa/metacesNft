@@ -1,0 +1,64 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+.left {
+    padding-top: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tickets {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+.ticket {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 72px;
+}
+.ticket p {
+    font-weight: 700;
+    font-size: 24px;
+}
+.ticket span {
+    font-weight: 400;
+    font-size: 12px;
+}
+.table {
+    margin-top: 20px;
+}
+.tab {
+    color: white !important;
+}
+.right {
+    padding-top: 56px;
+}
+.rightCard {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.rightHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.aactions button {
+    border-radius: 8px !important;
+}

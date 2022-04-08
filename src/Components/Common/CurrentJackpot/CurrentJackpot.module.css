@@ -1,0 +1,55 @@
+.mainCard {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 72px;
+}
+.cashIconContainer {
+    width: 48px;
+    height: 48px;
+    background: #2C2D3A;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.cashIconContainer svg {
+    color: white;
+}
+.mainCardInfo {
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+}
+.mainCardInfo h4 {
+    font-weight: 700;
+    font-size: 24px;
+    color: #DA3832;
+}
+.mainCardInfo span {
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 12px;
+    position: relative;
+    top: -2px;
+}
+.buyEntryContainer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+}
+.buyEntryContainer p {
+    font-weight: 600;
+    font-size: 14px;
+}
+.buyEntryContainer button {
+    background: #DA3832 !important;
+    border-radius: 16px !important;
+    width: 48px;
+    height: 48px;
+    padding: 0 !important;
+}
+.buyEntryContainer button svg {
+    color: white;
+}
