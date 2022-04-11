@@ -49,10 +49,10 @@ const App = () => {
                 <Route path="nft_minting" element={<NftMintingContainer/>} />
                 <Route path="nft_lottery" element={<NftLotteryContainer/>} />
                 <Route path="staking" element={<StackingContainer/>} />
-                {/* <Route
+                <Route
                   path="*"
                   element={<Navigate to="/" />}
-                /> */}
+                />
               </Routes>
             </div>
           </div>
