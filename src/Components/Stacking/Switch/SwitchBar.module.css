@@ -1,0 +1,14 @@
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 12px;
+}
+.main button {
+    width: 50%;
+    height: 40px !important;
+    border-radius: 12px !important;
+    text-transform: initial !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}

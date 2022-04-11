@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // Initial render: Render an element to the root.
 root.render(
   <Provider store={store}>
-    <App tab="home" />
+    <App />
   </Provider>
 );
 

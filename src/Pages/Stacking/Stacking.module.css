@@ -1,0 +1,47 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.left {
+    padding-top: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.left h4 {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.right {
+    padding-top: 56px;
+}
+.info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+    gap: 16px;
+}
+.field {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.field p {
+    font-size: 14px;
+}
+.labelContainer {
+    display: flex;
+    gap: 8px;
+}
+.labelContainer svg {
+    position: relative;
+    top: 2px;
+}
+.reward {
+    display: flex;
+    align-items: center;
+}

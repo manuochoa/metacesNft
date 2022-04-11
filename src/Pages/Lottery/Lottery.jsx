@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react'
-import { IconButton, Typography } from '@mui/material'
+import { Divider, IconButton, Typography } from '@mui/material'
 import React from 'react'
 import CurrentJackpot from '../../Components/Common/CurrentJackpot/CurrentJackpot'
 import TabTable from '../../Components/Common/TabTable/TabTable'
@@ -11,11 +11,19 @@ import LeftSide from '../../Components/UI/Sides/LeftSide/LeftSide'
 import RightSide from '../../Components/UI/Sides/RightSide/RightSide'
 import classes from './Lottery.module.css'
 import { makeStyles } from '@mui/styles'
+import SwapField from '../../Components/Common/SwapField/SwapField'
+import ArrowDownSwapIcon from '../../Components/UI/Icons/ArrowDownSwapIcon'
+
+import aces_logo from '../../Assets/Icons/aces_logo.png'
+import BUSD_icon from '../../Assets/Icons/BUSD.svg'
+import Label from '../../Components/UI/Text/Label/Label'
+import ArrowsChangeIcon from '../../Components/UI/Icons/ArrowsChangeIcon'
+import CustomButton from '../../Components/UI/Button/CustomButton'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         '& .MuiButtonBase-root': {
-            backgroundColor: theme.palette.background.buttonSecondary
+            backgroundColor: theme.palette.primary.main
         }
     }
 }));
@@ -158,14 +166,62 @@ const Lottery = (props) => {
                         <Typography variant='h4' color={"primary"}>Swap Tokens</Typography>
                         <div className={classes.actions}>
                             <IconButton 
-                                classes={styles}    
+                                style={{
+                                    backgroundColor: theme.palette.background.buttonSecondary,
+                                    color: theme.palette.primary.main,
+                                    borderRadius: "8px"
+                                }}    
                             >
                                 <SettingsIcon/>
                             </IconButton>
-                            <IconButton>
+                            <IconButton
+                                style={{
+                                    backgroundColor: theme.palette.background.buttonSecondary,
+                                    color: theme.palette.primary.main,
+                                    borderRadius: "8px"
+                                }}  
+                            >
                                 <HistoryIcon/>
                             </IconButton>
                         </div>
+                    </div>
+                    <SwapField
+                        tokenIcon={BUSD_icon}
+                        tokenName={"BNB"}
+                        leftLabel={"Pay"}
+                        available={"500"}
+                        valueText={"MAX"}
+                    />
+                    <div className={classes.iconContainer}>
+                        <ArrowDownSwapIcon color={theme.palette.primary.main}/>
+                    </div>
+                    <SwapField
+                        tokenIcon={aces_logo}
+                        tokenName={"$ACES"}
+                        leftLabel={"Receive (Estimated)"}
+                        available={"1,567,876"}
+                        valueText={"MAX"}
+                    />
+                    <div className={classes.swapInfo}>
+                        <Label text="1 BNB = 104,256 $ACES"/>
+                        <ArrowsChangeIcon color={theme.palette.primary.main}/>
+                    </div>
+                    <CustomButton text="Confirm"/>
+                    <Label className={classes.totalLabel} text="250,000 $ACES = 1 Lotto Entry"/>
+                    <Divider style={{ 
+                        border: `1px solid ${theme.palette.background.border}`,
+                        width: "100%",
+                        marginTop: "24px"
+                    }}/>
+                    <div className={classes.willGet}>
+                        <p
+                            style={{ color: theme.palette.text.primary }}
+                        >
+                            You will get: 
+                        </p>
+                        <p style={{ color: theme.palette.text.special }}>
+                            2 Entries!
+                        </p>
                     </div>
                 </SecondaryCard>
             </RightSide>

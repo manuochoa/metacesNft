@@ -54,11 +54,39 @@
     align-items: center;
     justify-content: space-between;
 }
+.rightHeader h4 {
+    font-weight: 600;
+    font-size: 18px;
+}
 .actions {
     display: flex;
     align-items: center;
     gap: 7px;
+    margin-bottom: 19px;
 }
-.aactions button {
+.actions button {
     border-radius: 8px !important;
+}
+.iconContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 28px 0;
+}
+.swapInfo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    margin: 24px 0
+}
+.totalLabel {
+    margin-top: 8px;
+}
+.willGet {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    margin-top: 24px;
 }

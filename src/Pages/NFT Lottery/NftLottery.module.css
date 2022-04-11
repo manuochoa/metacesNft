@@ -1,0 +1,33 @@
+.main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+.left {
+    padding-top: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+.right {
+    padding: 24px;
+    padding-top: 56px;
+    padding-bottom: 0;
+}
+.right h4 {
+    font-weight: 600;
+    font-size: 18px;
+}
+.wrapper {
+    margin-top: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 21px;
+    padding-bottom: 24px;
+    max-height: calc(100vh - 195px);
+    overflow-y: scroll;
+}
+.wrapper div {
+    width: calc(50% - 21px);
+}
