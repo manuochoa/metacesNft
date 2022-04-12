@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/metacesNft/static/css/main.c4951834.css",
-    "main.js": "/metacesNft/static/js/main.3c7e03d0.js",
+    "main.css": "/metacesNft/static/css/main.71c07ed6.css",
+    "main.js": "/metacesNft/static/js/main.a088556d.js",
     "static/js/787.6456aaa8.chunk.js": "/metacesNft/static/js/787.6456aaa8.chunk.js",
     "static/media/nftBig.png": "/metacesNft/static/media/nftBig.798b65e64ffbf10283be.png",
     "static/media/nft3.jpg": "/metacesNft/static/media/nft3.858d1b2de2202672bcc8.jpg",
@@ -10,12 +10,12 @@
     "static/media/nft1.jpg": "/metacesNft/static/media/nft1.d3ef6929b764b20c18ac.jpg",
     "index.html": "/metacesNft/index.html",
     "static/media/BUSD.svg": "/metacesNft/static/media/BUSD.c583303ef668aa25058d9ffc6d1a4b90.svg",
-    "main.c4951834.css.map": "/metacesNft/static/css/main.c4951834.css.map",
-    "main.3c7e03d0.js.map": "/metacesNft/static/js/main.3c7e03d0.js.map",
+    "main.71c07ed6.css.map": "/metacesNft/static/css/main.71c07ed6.css.map",
+    "main.a088556d.js.map": "/metacesNft/static/js/main.a088556d.js.map",
     "787.6456aaa8.chunk.js.map": "/metacesNft/static/js/787.6456aaa8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c4951834.css",
-    "static/js/main.3c7e03d0.js"
+    "static/css/main.71c07ed6.css",
+    "static/js/main.a088556d.js"
   ]
 }
