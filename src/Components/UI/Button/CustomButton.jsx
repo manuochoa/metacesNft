@@ -8,6 +8,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
         color: `${theme.palette.text.primary} !important`,
         backgroundColor: `${theme.palette.secondary.main} !important`,
+        '&:disabled': {
+            color: `${theme.palette.text.secondary} !important`,
+            backgroundColor: `${theme.palette.background.buttonSecondary} !important`,
+        },
         '&:hover': {
             backgroundColor: `${theme.palette.secondary.hover} !important`
         },
@@ -17,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+
 const CustomButton = (props) => {
-    const { text, disabled, onClick } = props
+    const { text, disabled = false, onClick } = props
 
     const material = useStyles()
 
@@ -27,6 +32,7 @@ const CustomButton = (props) => {
             disabled={disabled}
             className={classes.main}
             classes={material}
+            onClick={onClick}
         >
             {text}
         </Button>

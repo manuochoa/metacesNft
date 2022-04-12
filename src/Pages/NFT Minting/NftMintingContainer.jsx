@@ -12,7 +12,9 @@ const NftMintingContainer = (props) => {
 
     const handleLimit = (type) => {
         if(type === "plus") {
-            setLimit(limit + 1)
+            if(limit + 1 <= 20) {
+                setLimit(limit + 1)
+            }
         }else {
             if(limit - 1 != 0) {
                 setLimit(limit - 1)

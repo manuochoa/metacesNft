@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CurrentJackpot = (props) => {
-    const { cash, actionText } = props
+    const { cash, actionText, onClick } = props
 
     const material = useStyles()
 
@@ -36,7 +36,7 @@ const CurrentJackpot = (props) => {
             </div>
             <div className={classes.buyEntryContainer}>
                 <p>{actionText}</p>
-                <CustomIconButton icon={<ArrowLeftIcon/>}/>
+                <CustomIconButton icon={<ArrowLeftIcon/>} onClick={onClick}/>
             </div>
         </MainCard>
     )

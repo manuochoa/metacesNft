@@ -45,3 +45,79 @@
     display: flex;
     align-items: center;
 }
+.buttons {
+    width: 100%;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+.buttons button {
+    height: 56px !important;
+    border-radius: 16px !important;
+    text-transform: initial !important;
+    font-weight: 700 !important;
+    background-color: transparent !important;
+}
+.percentButns {
+    margin-top: 8px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.percentButns button {
+    height: 36px !important;
+    width: 68px !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+}
+.miniTableHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    border-radius: 16px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+.miniTableHeader label {
+    width: 33%;
+    font-size: 12px !important;
+}
+.miniTableHeader label:last-child {
+    text-align: right;
+}
+.miniTableItems {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 48px;
+}
+.miniTableItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: 400;
+}
+.miniTableItem div {
+    width: 33%;
+}
+.miniTableToken {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.miniTableToken img { 
+    width: 20px;
+}
+.miniTableItem div:last-child {
+   text-align: right;
+}

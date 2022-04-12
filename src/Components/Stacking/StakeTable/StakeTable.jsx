@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles'
 import React from 'react'
 import CustomIconButton from '../../UI/Button/IconButton/CustomIconButton'
 import ArrowLeftIcon from '../../UI/Icons/ArrowLeftIcon'
+import LittleArrow from '../../UI/Icons/LittleArrow'
 import Label from '../../UI/Text/Label/Label'
 
 const tableStyles = makeStyles((theme) => ({
@@ -21,20 +22,10 @@ const tableStyles = makeStyles((theme) => ({
             borderBottomRightRadius: "16px" ,
             borderTopRightRadius: "16px" 
         },
-        '& tr:hover td:first-child': { 
-            borderLeft: `1px solid ${theme.palette.secondary.main}`
-        },
-        '& tr:hover td:last-child': { 
-            borderRight: `1px solid ${theme.palette.secondary.main}`
-        },
-        '& tr td': {
+        '& td': {
             borderTop: "1px solid transparent !important",
             borderBottom: "1px solid transparent !important",
             transitionDuration: ".3s"
-        },
-        '& tr:hover td': {
-            borderTop: `1px solid ${theme.palette.secondary.main} !important`,
-            borderBottom: `1px solid ${theme.palette.secondary.main} !important`
         },
         "& .MuiTableRow-root": {
             height: "72px",
@@ -59,10 +50,27 @@ const tableStyles = makeStyles((theme) => ({
     }
 }));
 
+const selectedRowStyles = makeStyles((theme) => ({
+    root: {
+        '& td:first-child': { 
+            borderLeft: `1px solid ${theme.palette.secondary.main} !important`
+        },
+        '& td:last-child': { 
+            borderRight: `1px solid ${theme.palette.secondary.main} !important`
+        },
+        '& td': {
+            transitionDuration: ".3s",
+            borderTop: `1px solid ${theme.palette.secondary.main} !important`,
+            borderBottom: `1px solid ${theme.palette.secondary.main} !important`
+        },
+    }
+}));
+
 const StakeTable = (props) => {
-    const { rows, items, setCurrentInfo } = props
+    const { rows, items, setCurrentInfo, currentInfo } = props
 
     const material = tableStyles()
+    const materialSelected = selectedRowStyles()
 
     return (
         <TableContainer>
@@ -77,14 +85,18 @@ const StakeTable = (props) => {
                         </TableCell>
                     ))}
                 </TableHead>
-                <TableBody>
+                <TableBody >
                     {items.map((el, index) => (
-                        <TableRow key={el._id}>
+                        <TableRow key={el._id} classes={currentInfo.period === el.period && materialSelected}>
                             <TableCell>{el.period}</TableCell>
                             <TableCell>{el.daily_back}</TableCell>
                             <TableCell>{el.earnings ? el.earnings : "-"}</TableCell>
                             <TableCell align='right'>
-                                <CustomIconButton onClick={() => setCurrentInfo(el)} icon={<ArrowLeftIcon/>}/>
+                                <CustomIconButton 
+                                    onClick={() => setCurrentInfo(el)} 
+                                    icon={<LittleArrow/>}
+                                    active={el.period === currentInfo.period}
+                                />
                             </TableCell>
                         </TableRow>
                     ))}

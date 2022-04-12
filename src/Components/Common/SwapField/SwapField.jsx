@@ -1,5 +1,5 @@
 import { useTheme } from '@emotion/react'
-import React from 'react'
+import React, { useState } from 'react'
 import Label from '../../UI/Text/Label/Label'
 import classes from './SwapField.module.css'
 
@@ -11,10 +11,21 @@ const SwapField = (props) => {
         available,
         value,
         onChange,
-        valueText
+        valueText,
+        inputRef = null
     } = props
 
     const theme = useTheme()
+
+    const [onFocus, setOnFocus] = useState(false)
+
+    const handleFocus = () => {
+        setOnFocus(!onFocus)
+    }
+
+    const handleChange = (e) => {
+        onChange(e.target.value.replace(/[^0-9]/g, ''))
+    }
 
     return (
         <div className={classes.main}>
@@ -25,7 +36,9 @@ const SwapField = (props) => {
             <div 
                 className={classes.content}
                 style={{ 
-                    border: `1px solid ${theme.palette.background.border}`
+                    transitionDuration: ".3s",
+                    border: onFocus ? `1px solid ${theme.palette.primary.main}`
+                        : `1px solid ${theme.palette.background.border}`
                 }}
             >
                 <div className={classes.token}>
@@ -37,6 +50,14 @@ const SwapField = (props) => {
                     </p>
                 </div>
                 <div className={classes.value}>
+                    <input 
+                        value={value} 
+                        onChange={handleChange} 
+                        placeholder={0}
+                        onFocus={handleFocus}
+                        onBlur={handleFocus}
+                        ref={inputRef}
+                    />
                     {valueText && 
                         <p 
                             className={classes.max}
@@ -47,7 +68,6 @@ const SwapField = (props) => {
                             {valueText}
                         </p>
                     }
-                    <input value={value} onChange={onChange} placeholder={0}/>
                 </div>
             </div>
         </div>

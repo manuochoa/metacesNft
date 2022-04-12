@@ -56,6 +56,7 @@ const NftMinting = (props) => {
                                     color: theme.palette.primary.main
                                 }}
                                 onClick={() => handleLimit("plus")}
+                                disabled={limit + 1 > 20}
                             >
                                 +
                             </IconButton>

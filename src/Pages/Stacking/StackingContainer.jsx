@@ -3,6 +3,9 @@ import Stacking from './Staking'
 
 const StackingContainer = (props) => {
     const [toogleValue, setToogleValue] = useState("stake")
+    const [currentPercent, setCurrentPercent] = useState(50)
+    const [stakeValue, setStakeValue] = useState("")
+    const [unstakeValue, setUnstakeValue] = useState("")
 
     const info = [
         {
@@ -40,6 +43,12 @@ const StackingContainer = (props) => {
                 info={info}
                 currentInfo={currentInfo}
                 setCurrentInfo={setCurrentInfo}
+                currentPercent={currentPercent}
+                setCurrentPercent={setCurrentPercent}
+                stakeValue={stakeValue}
+                handleStakeValue={setStakeValue}
+                unstakeValue={unstakeValue}
+                handleUnstakeValue={setUnstakeValue}
             />
         </>
     )

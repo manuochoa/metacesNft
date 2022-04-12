@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react'
-import { Divider, IconButton, Typography } from '@mui/material'
-import React from 'react'
+import { Divider, IconButton, Tooltip, Typography } from '@mui/material'
+import React, { useRef } from 'react'
 import CurrentJackpot from '../../Components/Common/CurrentJackpot/CurrentJackpot'
 import TabTable from '../../Components/Common/TabTable/TabTable'
 import MainCard from '../../Components/UI/Cards/MainCard/MainCard'
@@ -19,6 +19,7 @@ import BUSD_icon from '../../Assets/Icons/BUSD.svg'
 import Label from '../../Components/UI/Text/Label/Label'
 import ArrowsChangeIcon from '../../Components/UI/Icons/ArrowsChangeIcon'
 import CustomButton from '../../Components/UI/Button/CustomButton'
+import { parseMoney } from '../../Utils/parseMoney'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,6 +30,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Lottery = (props) => {
+    const { 
+        pay,
+        receive,
+        handlePay,
+        handleReceive,
+        handleSwap,
+        exchangeRate,
+    } = props
 
     const styles = useStyles()
 
@@ -136,12 +145,18 @@ const Lottery = (props) => {
         },
     ]
 
+    const firstInputRef = useRef()
+
     const theme = useTheme()
 
     return(
         <div className={classes.main}>
             <LeftSide className={classes.left}>
-                <CurrentJackpot cash={"38,881.34"} actionText={"Buy Entry"}/>
+                <CurrentJackpot 
+                    cash={"38,881.34"} 
+                    actionText={"Buy Entry"}
+                    onClick={() => firstInputRef.current.focus()}
+                />
                 <div className={classes.tickets}>
                     <MainCard className={classes.ticket}>
                         <p>1,567,876</p>
@@ -186,27 +201,36 @@ const Lottery = (props) => {
                         </div>
                     </div>
                     <SwapField
-                        tokenIcon={BUSD_icon}
-                        tokenName={"BNB"}
+                        tokenIcon={pay.icon}
+                        tokenName={pay.name}
                         leftLabel={"Pay"}
-                        available={"500"}
+                        available={parseMoney(pay.available)}
                         valueText={"MAX"}
+                        inputRef={firstInputRef}
+                        value={pay.value}
+                        onChange={handlePay}
                     />
                     <div className={classes.iconContainer}>
                         <ArrowDownSwapIcon color={theme.palette.primary.main}/>
                     </div>
                     <SwapField
-                        tokenIcon={aces_logo}
-                        tokenName={"$ACES"}
+                        tokenIcon={receive.icon}
+                        tokenName={receive.name}
                         leftLabel={"Receive (Estimated)"}
-                        available={"1,567,876"}
+                        available={parseMoney(receive.available)}
                         valueText={"MAX"}
+                        value={receive.value}
+                        onChange={handleReceive}
                     />
                     <div className={classes.swapInfo}>
-                        <Label text="1 BNB = 104,256 $ACES"/>
-                        <ArrowsChangeIcon color={theme.palette.primary.main}/>
+                        <Label text={`1 BNB = ${parseMoney(exchangeRate)} $ACES`}/>
+                        <Tooltip title="Swap">
+                            <IconButton onClick={handleSwap}>
+                                <ArrowsChangeIcon color={theme.palette.primary.main}/>
+                            </IconButton>
+                        </Tooltip>
                     </div>
-                    <CustomButton text="Confirm"/>
+                    <CustomButton text="Confirm" disabled={(!pay.value || !receive.value)}/>
                     <Label className={classes.totalLabel} text="250,000 $ACES = 1 Lotto Entry"/>
                     <Divider style={{ 
                         border: `1px solid ${theme.palette.background.border}`,

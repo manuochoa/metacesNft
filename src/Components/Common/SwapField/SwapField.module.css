@@ -33,6 +33,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 75%;
     gap: 25px;
 }
 .max {
@@ -43,7 +44,7 @@
     background-color: transparent;
     border: none;
     outline: none;
-    width: 55px;
+    width: 100%;
     font-weight: 700;
     font-size: 20px;
     font-family: 'Poppins';
