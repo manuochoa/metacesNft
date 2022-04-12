@@ -5,3 +5,9 @@
     box-sizing: border-box;
     width: 100%;
 }
+
+@media screen and (max-width: 360px) {
+    .main {
+        padding: 10px;
+    }
+}

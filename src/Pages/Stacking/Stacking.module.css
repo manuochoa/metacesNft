@@ -121,3 +121,23 @@
 .miniTableItem div:last-child {
    text-align: right;
 }
+
+
+@media screen and (max-width: 1366px) {
+    .left {
+        padding-top: 24px;
+    }
+    .right {
+        padding-top: 24px;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .buttons {
+        flex-direction: row;
+        gap: 16px;
+    }
+    .buttons button {
+        width: 100%;
+    }
+}

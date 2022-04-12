@@ -9,7 +9,11 @@ const tabStyles = makeStyles((theme) => ({
     root: {
         '& .MuiTabs-flexContainer': {
             gap: "44px",
-            borderBottom: '1px solid #3B3C4E'
+            borderBottom: '1px solid #3B3C4E',
+            
+            "@media screen and (max-width: 468px)": {
+                gap: 0
+            }
         },
         '& .MuiTab-textColorPrimary': {
             color: theme.palette.primary.main,
@@ -80,8 +84,12 @@ const TabTable = (props) => {
                 {tabIndex === 0 &&
                 <>
                     <div className={classes.tables}>
-                        <TableComponent items={items.slice(0, 10)} rows={rows}/>
-                        <TableComponent items={items.slice(-10)} rows={rows}/>
+                        <div className={classes.table}>
+                            <TableComponent items={items.slice(0, 10)} rows={rows}/>
+                        </div>
+                        <div className={classes.secondTable}>
+                            <TableComponent items={items.slice(-10)} rows={rows} second={true}/>
+                        </div>
                     </div>
                     <div className={classes.pagination}>
                         <Pagination 

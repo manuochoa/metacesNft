@@ -31,3 +31,21 @@
 .wrapper div {
     width: calc(50% - 21px);
 }
+
+@media screen and (max-width: 1366px) {
+    .left {
+        padding-top: 24px;
+    }
+    .right {
+        padding-top: 24px;
+    }
+    .wrapper {
+        max-height: calc(100vh - 165px);
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .left {
+        gap: 20px;
+    }
+}

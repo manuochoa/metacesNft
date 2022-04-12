@@ -53,6 +53,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 19px;
 }
 .rightHeader h4 {
     font-weight: 600;
@@ -62,7 +63,6 @@
     display: flex;
     align-items: center;
     gap: 7px;
-    margin-bottom: 19px;
 }
 .actions button {
     border-radius: 8px !important;
@@ -89,4 +89,85 @@
     gap: 8px;
     font-size: 14px;
     margin-top: 24px;
+}
+
+@media screen and (max-width: 1366px) {
+    .left {
+        padding-top: 24px;
+    }
+    .right {
+        padding-top: 24px;
+    }
+    .table {
+        margin-top: 0;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .table > div > div {
+        overflow-y: scroll;
+        max-height: 50vh;
+    }
+    .iconContainer {
+        margin: 24px 0;
+    }
+}
+
+@media screen and (max-width: 1170px) {
+    .main {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .left {
+        padding: 15px;
+    }
+    .tickets {
+        flex-direction: column;
+    }
+    .table {
+        margin-top: 28px;
+    }
+    .table > div > div {
+        overflow-y: auto;
+        max-height: unset
+    }
+}
+
+@media screen and (max-width: 468px) {
+    .actions {
+        margin-bottom: 0;
+    }
+    .ticket p {
+        font-size: 20px;
+    }
+    .ticket span {
+        font-size: 12px;
+    }
+
+}
+
+@media screen and (max-width: 360px) {
+    .ticket {
+        gap: 2px;
+    }
+    .ticket p {
+        font-size: 18px;
+    }
+    .ticket span {
+        font-size: 10px;
+    }
+    .rightHeader h4 {
+        font-size: 16px;
+    }
+    .willGet {
+        margin-top: 12px;
+    }
+    .willGet p {
+        font-size: 12px;
+    }
+    .swapInfo {
+        margin: 16px 0;
+    }
 }

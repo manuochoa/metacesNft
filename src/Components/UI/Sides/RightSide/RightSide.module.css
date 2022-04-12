@@ -3,3 +3,11 @@
     background-color: #23242F;
     height: calc(100vh - 69px);
 }
+
+@media screen and (max-width: 1170px) {
+    .main {
+        width: 100%;
+        height: fit-content;
+        background-color: transparent;
+    }
+}

@@ -56,6 +56,8 @@
     padding: 10px 24px;
     box-sizing: border-box;
     border-radius: 40px; 
+    display: flex;
+    align-items: center;
 }
 .walletButContainer {
     display: flex;
@@ -92,4 +94,89 @@
     font-weight: 600 !important;
     font-size: 14px !important;
     height: 100% !important;
+}
+
+@media screen and (max-width: 1280px) {
+    .left {
+        padding: 16px 40px;
+    }
+    .right {
+        padding: 12px 24px;
+    }
+}
+
+@media screen and (max-width: 1170px) {
+    .left {
+        width: 100%;
+    }
+    .right {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        gap: 24px;
+        justify-content: center;
+        z-index: 10;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .left {
+        padding: 24px 15px;
+    }
+    .right {
+        padding: 12px 15px;
+        justify-content: space-between;
+    }
+    .links {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 468px) {
+    .curs p {
+        display: none;
+    }
+    .curs p + p {
+        display: block;
+    }
+    .walletBut {
+        font-size: 12px !important;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    .links {
+        gap: 0;
+    }
+    .bsc {
+        padding: 0;
+    }
+    .bsc p {
+        font-size: 12px;
+    }
+    .curs {
+        padding: 6px 18px;
+    }
+    .walletButContainer {
+        height: 36px;
+    }
+    .walletBut {
+        padding: 6px 13px !important;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .right {
+        gap: 8px;
+    }
+    .curs {
+        font-size: 12px;
+    }
+    .walletButContainer {
+        gap: 4px;
+        padding-left: 8px;
+    }
+    .walletBut {
+        font-size: 10px !important;
+    }
 }

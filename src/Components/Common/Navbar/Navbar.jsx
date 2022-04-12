@@ -23,7 +23,8 @@ const Navbar = (props) => {
                     <SunIcon/>
                 </IconButton>
                 <div className={classes.curs}>
-                    <p>1 $ACES = $1.34</p>
+                    <p>1 $ACES = </p>
+                    <p>&nbsp;$1.34</p>
                 </div>
                 <div className={classes.walletButContainer}>
                     <div className={classes.bsc}>

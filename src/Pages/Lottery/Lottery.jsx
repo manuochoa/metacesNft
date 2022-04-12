@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react'
 import { Divider, IconButton, Tooltip, Typography } from '@mui/material'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import CurrentJackpot from '../../Components/Common/CurrentJackpot/CurrentJackpot'
 import TabTable from '../../Components/Common/TabTable/TabTable'
 import MainCard from '../../Components/UI/Cards/MainCard/MainCard'
@@ -149,13 +149,26 @@ const Lottery = (props) => {
 
     const theme = useTheme()
 
+    const timer = null
+
+    const handleFocus = () => {
+        firstInputRef.current.scrollIntoView({behavior: 'smooth'})
+        timer = setTimeout(() => {
+            firstInputRef.current.focus()
+        }, 500);
+    }
+
+    useEffect(() => {
+        return () => clearTimeout(timer);
+    }, []);
+
     return(
         <div className={classes.main}>
             <LeftSide className={classes.left}>
                 <CurrentJackpot 
                     cash={"38,881.34"} 
                     actionText={"Buy Entry"}
-                    onClick={() => firstInputRef.current.focus()}
+                    onClick={handleFocus}
                 />
                 <div className={classes.tickets}>
                     <MainCard className={classes.ticket}>

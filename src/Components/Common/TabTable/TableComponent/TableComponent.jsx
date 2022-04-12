@@ -8,7 +8,14 @@ const tableStyles = makeStyles((theme) => ({
            color: theme.palette.primary.main,
            borderBottom: "none",
            paddingTop: "8px",
-           paddingBottom: "8px"
+           paddingBottom: "8px",
+           "@media screen and (max-width: 468px)": {
+                paddingBottom: "6px",
+                paddingTop: "6px"
+            },
+            "@media screen and (max-width: 360px)": {
+                fontSize: "12px"
+            }
         },
         "& .MuiTableCell-head": {
             opacity: .5,
@@ -19,7 +26,7 @@ const tableStyles = makeStyles((theme) => ({
 }));
 
 const TableComponent = (props) => {
-    const { items, rows } = props
+    const { items, rows, second = false } = props
 
     const materialTable = tableStyles()
 
@@ -55,7 +62,7 @@ const TableComponent = (props) => {
                                         key={key}
                                         align={key === "entries" ? "right" : 'left'}
                                     >
-                                        {i === 0 && index + 1}
+                                        {i === 0 && index + 1 + (second ? 10 : 0)}
                                         {i === 1 && (el[key].substring(0, 12) + "..." + el[key].substring(el[key].length - 4))}
                                         {i === 2 && el[key]}
                                     </TableCell>

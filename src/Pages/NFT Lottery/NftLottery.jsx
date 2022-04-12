@@ -132,7 +132,9 @@ const NftLottery = (props) => {
         <div className={classes.main}>
             <LeftSide className={classes.left}>
                 <CurrentJackpot cash={"38,881.34"} actionText={"Mint Now"}/>
-                <TabTable items={values}/>
+                <div className={classes.table}>
+                    <TabTable items={values}/>
+                </div>
             </LeftSide>
             <RightSide className={classes.right}>
                 <Typography variant='h4' color="primary">Eligible NFT's</Typography>
