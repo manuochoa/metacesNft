@@ -117,7 +117,7 @@ const StakeTable = (props) => {
                         </TableCell>
                     ))}
                 </TableHead>
-                <TableBody >
+                <TableBody>
                     {items.map((el, index) => (
                         <TableRow key={el._id} classes={currentInfo.period === el.period && materialSelected}>
                             <TableCell>{el.period}</TableCell>
