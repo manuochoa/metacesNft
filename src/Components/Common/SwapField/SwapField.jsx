@@ -1,5 +1,7 @@
 import { useTheme } from '@emotion/react'
+import { Button } from '@mui/material'
 import React, { useState } from 'react'
+import { cx } from '../../../Utils/classnames'
 import Label from '../../UI/Text/Label/Label'
 import classes from './SwapField.module.css'
 
@@ -27,6 +29,10 @@ const SwapField = (props) => {
         onChange(e.target.value.replace(/[^0-9]/g, ''))
     }
 
+    const setMax = (value) => {
+        onChange(value)
+    }
+
     return (
         <div className={classes.main}>
             <div className={classes.header}>
@@ -34,7 +40,7 @@ const SwapField = (props) => {
                 <Label text={"Available: " + available}/>
             </div>
             <div 
-                className={classes.content}
+                className={cx(classes.content, valueText ? classes.noPaddingRight : '')}
                 style={{ 
                     transitionDuration: ".3s",
                     border: onFocus ? `1px solid ${theme.palette.primary.main}`
@@ -59,14 +65,15 @@ const SwapField = (props) => {
                         ref={inputRef}
                     />
                     {valueText && 
-                        <p 
+                        <Button 
                             className={classes.max}
                             style={{
                                 color: theme.palette.text.special
                             }}
+                            onClick={() => setMax(available)}
                         >
                             {valueText}
-                        </p>
+                        </Button>
                     }
                 </div>
             </div>

@@ -100,3 +100,49 @@
     font-weight: 700;
     font-size: 24px;
 }
+
+@media screen and (max-width: 1170px) {
+    .main {
+        flex-direction: column;
+    }
+    .right {
+        padding-top: 0;
+    }
+    .imgContainer {
+        height: fit-content;
+        padding: 0;
+    }
+    .counterContainer {
+        width: 100%;
+    }
+    .priceBlock {
+        margin-bottom: 20px;
+    }
+    .stage p {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .left {
+        padding: 15px
+    }
+    .counter input {
+        width: 50px;
+    }
+    .rightCard {
+        padding-bottom: 24px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .rightHeader h4 {
+        font-size: 16px;
+    }
+    .limit p {
+        font-size: 20px;
+    }
+    .priceBlock h4 {
+        font-size: 20px;
+    }
+}

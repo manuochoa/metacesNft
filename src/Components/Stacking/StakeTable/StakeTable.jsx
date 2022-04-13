@@ -2,35 +2,62 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import CustomIconButton from '../../UI/Button/IconButton/CustomIconButton'
-import ArrowLeftIcon from '../../UI/Icons/ArrowLeftIcon'
 import LittleArrow from '../../UI/Icons/LittleArrow'
 import Label from '../../UI/Text/Label/Label'
 
 const tableStyles = makeStyles((theme) => ({
     root: {
         borderSpacing: "0 20px !important",
-        borderCollapse: "unset !important",
+        borderCollapse: "unset !important", 
+        '@media screen and (max-width: 568px)': {
+            borderSpacing: "0 8px !important",
+        },
+        '& th label': {
+            '@media screen and (max-width: 375px)': {
+                fontSize: "12px !important",
+            },
+            '@media screen and (max-width: 340px)': {
+                fontSize: "10px !important",
+            },
+        },
+        '& th': {
+            '@media screen and (max-width: 375px)': {
+                fontSize: "12px !important",
+                padding: "8px !important"
+            }
+        },
+        '& td': {
+            borderTop: "1px solid transparent !important",
+            borderBottom: "1px solid transparent !important",
+            position: "relative",
+            backgroundColor: theme.palette.background.thirdBg,
+            '@media screen and (max-width: 375px)': {
+                padding: "8px !important"
+            }
+        },
         '& tr td:first-child': { 
             borderTopLeftRadius: "16px",
             borderBottomLeftRadius: "16px", 
             borderBottomLeftRadius: "16px",
-            borderTopLeftRadius: "16px" 
+            borderTopLeftRadius: "16px" ,
         },
         '& tr td:last-child': { 
             borderTopRightRadius: "16px",
             borderBottomRightRadius: "16px",
             borderBottomRightRadius: "16px" ,
-            borderTopRightRadius: "16px" 
+            borderTopRightRadius: "16px",
         },
-        '& td': {
-            borderTop: "1px solid transparent !important",
-            borderBottom: "1px solid transparent !important",
-            transitionDuration: ".3s"
+        '& tr td:nth-child(2)':{
+            left: "0px"
         },
         "& .MuiTableRow-root": {
             height: "72px",
-            backgroundColor: theme.palette.background.thirdBg,
-            width: "100%",
+            
+            width: "calc(100% - 5px)",
+
+            '@media screen and (max-width: 375px)': {
+                height: "fit-content"
+            }
         },
         "& .MuiTableCell-root": {
             color: theme.palette.primary.main,
@@ -40,12 +67,17 @@ const tableStyles = makeStyles((theme) => ({
             fontSize: "14px !important",
             fontWeight: "600 !important",
             maring: "10px 0 !important",
-            border: "1px solid transparent"
+            "@media screen and (max-width: 468px)": {
+                fontSize: "12px !important"
+            }
         },
         "& .MuiTableCell-head": {
             opacity: .5,
             fontSize: "14px",
-            fontWeight: "400"
+            fontWeight: "400",
+            "@media screen and (max-width: 468px)": {
+                fontSize: "12px !important"
+            }
         }
     }
 }));
@@ -59,7 +91,7 @@ const selectedRowStyles = makeStyles((theme) => ({
             borderRight: `1px solid ${theme.palette.secondary.main} !important`
         },
         '& td': {
-            transitionDuration: ".3s",
+            transitionDuration: ".1s",
             borderTop: `1px solid ${theme.palette.secondary.main} !important`,
             borderBottom: `1px solid ${theme.palette.secondary.main} !important`
         },

@@ -37,8 +37,10 @@
     gap: 25px;
 }
 .max {
-    font-weight: 700;
-    font-size: 20px;
+    font-weight: 700 !important;
+    font-size: 20px !important;
+    border-radius: 8px !important;
+    padding: 0 8px !important;
 }
 .value input {
     background-color: transparent;
@@ -51,10 +53,13 @@
     color: white;
     text-align: right;
 }
+.noPaddingRight {
+    padding-right: 8px;
+}
 
 @media screen and (max-width: 468px) {
     .max {
-        font-size: 18px;
+        font-size: 18px !important;
     }
     .value input {
         font-size: 18px;
@@ -62,6 +67,14 @@
 }
 
 @media screen and (max-width: 360px) {
+    .max {
+        font-size: 16px !important;
+    }
+    .content {
+        border-radius: 12px;
+        padding: 12px;
+        height: 48px;
+    }
     .ticket p {
         font-size: 18px;
     }
@@ -70,5 +83,8 @@
     }
     .rightHeader h4 {
         font-size: 16px;
+    }
+    .noPaddingRight {
+        padding-right: 6px;
     }
 }

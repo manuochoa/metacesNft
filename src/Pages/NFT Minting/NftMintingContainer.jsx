@@ -10,6 +10,8 @@ const NftMintingContainer = (props) => {
 
     const [limit, setLimit] = useState(1)
 
+    const coinRate = 18.3
+
     const handleLimit = (type) => {
         if(type === "plus") {
             if(limit + 1 <= 20) {
@@ -28,6 +30,7 @@ const NftMintingContainer = (props) => {
                 item={currentNft}
                 limit={limit}
                 handleLimit={handleLimit}
+                coinRate={coinRate}
             />
         </>
     )

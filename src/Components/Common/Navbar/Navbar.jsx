@@ -5,6 +5,7 @@ import { Button, IconButton } from '@mui/material'
 import logo from '../../../Assets/logo.png'
 import SunIcon from '../../UI/Icons/SunIcon'
 import { NavLink } from 'react-router-dom'
+import Burger from './Burger/Burger'
 
 const Navbar = (props) => {
     return (
@@ -16,6 +17,9 @@ const Navbar = (props) => {
                     <NavLink to="/nft_minting" className={(navData) => (navData.isActive ? classes.active : '')}>NFT Minting</NavLink>
                     <NavLink to="/nft_lottery" className={(navData) => (navData.isActive ? classes.active : '')}>NFT Lottery</NavLink>
                     <NavLink to="/staking" className={(navData) => (navData.isActive ? classes.active : '')}>Staking</NavLink>
+                </div>
+                <div className={classes.burger}>
+                    <Burger/>
                 </div>
             </div>
             <div className={classes.right}>

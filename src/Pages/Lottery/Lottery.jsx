@@ -14,12 +14,11 @@ import { makeStyles } from '@mui/styles'
 import SwapField from '../../Components/Common/SwapField/SwapField'
 import ArrowDownSwapIcon from '../../Components/UI/Icons/ArrowDownSwapIcon'
 
-import aces_logo from '../../Assets/Icons/aces_logo.png'
-import BUSD_icon from '../../Assets/Icons/BUSD.svg'
 import Label from '../../Components/UI/Text/Label/Label'
 import ArrowsChangeIcon from '../../Components/UI/Icons/ArrowsChangeIcon'
 import CustomButton from '../../Components/UI/Button/CustomButton'
 import { parseMoney } from '../../Utils/parseMoney'
+import useWindowDimensions from '../../Hooks/useWindowDimension'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -149,13 +148,19 @@ const Lottery = (props) => {
 
     const theme = useTheme()
 
+    const { width } = useWindowDimensions()
+
     const timer = null
 
     const handleFocus = () => {
         firstInputRef.current.scrollIntoView({behavior: 'smooth'})
-        timer = setTimeout(() => {
+        if(width <= 1170) {
+            timer = setTimeout(() => {
+                firstInputRef.current.focus()
+            }, 500);
+        }else {
             firstInputRef.current.focus()
-        }, 500);
+        }
     }
 
     useEffect(() => {
@@ -224,7 +229,11 @@ const Lottery = (props) => {
                         onChange={handlePay}
                     />
                     <div className={classes.iconContainer}>
-                        <ArrowDownSwapIcon color={theme.palette.primary.main}/>
+                        <Tooltip title="Swap">
+                            <IconButton onClick={handleSwap}>
+                                <ArrowDownSwapIcon color={theme.palette.primary.main}/>
+                            </IconButton>
+                        </Tooltip>
                     </div>
                     <SwapField
                         tokenIcon={receive.icon}
@@ -237,11 +246,7 @@ const Lottery = (props) => {
                     />
                     <div className={classes.swapInfo}>
                         <Label text={`1 BNB = ${parseMoney(exchangeRate)} $ACES`}/>
-                        <Tooltip title="Swap">
-                            <IconButton onClick={handleSwap}>
-                                <ArrowsChangeIcon color={theme.palette.primary.main}/>
-                            </IconButton>
-                        </Tooltip>
+                        <ArrowsChangeIcon color={theme.palette.primary.main}/>
                     </div>
                     <CustomButton text="Confirm" disabled={(!pay.value || !receive.value)}/>
                     <Label className={classes.totalLabel} text="250,000 $ACES = 1 Lotto Entry"/>

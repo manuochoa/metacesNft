@@ -12,7 +12,8 @@ const NftMinting = (props) => {
     const { 
         item,
         limit,
-        handleLimit
+        handleLimit,
+        coinRate
     } = props
 
     const theme = useTheme()
@@ -65,7 +66,7 @@ const NftMinting = (props) => {
                     <Label text="Amount Max 20 per transaction"/>
                     <div className={classes.priceBlock} style={{ backgroundColor: theme.palette.background.thirdBg }}>
                         <div className={classes.stage}>
-                            <p style={{ color: theme.palette.text.primary }}>1 x 18.3 BNB</p>
+                            <p style={{ color: theme.palette.text.primary }}>{limit} x {coinRate} BNB</p>
                             <Label text="Excluding gas fee"/>
                         </div>
                         <Divider style={{ 
@@ -74,7 +75,7 @@ const NftMinting = (props) => {
                             margin: "16px 0"
                         }}/>
                          <div className={classes.stage}>
-                            <Typography variant='h4'>18.3 BNB</Typography>
+                            <Typography variant='h4'>{coinRate * limit} BNB</Typography>
                             <Label text="Price"/>
                         </div>
                     </div>  

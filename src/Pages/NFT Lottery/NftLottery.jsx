@@ -11,6 +11,8 @@ import nft2 from '../../Assets/nft2.jpg'
 import nft3 from '../../Assets/nft3.jpg'
 import nft4 from '../../Assets/nft4.jpg'
 import NftSmallItem from '../../Components/NFT/NftSmallItem/NftSmallItem'
+import { useNavigate } from 'react-router-dom'
+import SecondaryCard from '../../Components/UI/Cards/SecondaryCard/SecondaryCard'
 
 const NftLottery = (props) => {
     const values = [
@@ -128,21 +130,37 @@ const NftLottery = (props) => {
         { image: nft4 },
     ]
 
+    const navigate = useNavigate()
+
+    const onClick = () => {
+        navigate(`/nft_minting`)
+    }
+
     return (
         <div className={classes.main}>
             <LeftSide className={classes.left}>
-                <CurrentJackpot cash={"38,881.34"} actionText={"Mint Now"}/>
+                <CurrentJackpot cash={"38,881.34"} actionText={"Mint Now"} onClick={onClick}/>
                 <div className={classes.table}>
                     <TabTable items={values}/>
                 </div>
             </LeftSide>
             <RightSide className={classes.right}>
-                <Typography variant='h4' color="primary">Eligible NFT's</Typography>
-                <div className={classes.wrapper}>
-                    {nfts.map(el => (
-                        <NftSmallItem item={el}/>
-                    ))}
+                <div className={classes.desktop}>
+                    <Typography variant='h4' color="primary">Eligible NFT's</Typography>
+                    <div className={classes.wrapper}>
+                        {nfts.map(el => (
+                            <NftSmallItem item={el}/>
+                        ))}
+                    </div>
                 </div>
+                <SecondaryCard className={classes.secCard}>
+                    <Typography variant='h4' color="primary">Eligible NFT's</Typography>
+                    <div className={classes.wrapper}>
+                        {nfts.map(el => (
+                            <NftSmallItem item={el}/>
+                        ))}
+                    </div>
+                </SecondaryCard>
             </RightSide>
         </div>
     )

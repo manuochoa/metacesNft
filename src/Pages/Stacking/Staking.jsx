@@ -23,11 +23,13 @@ const Stacking = (props) => {
         currentInfo,
         setCurrentInfo,
         currentPercent,
+        currentUnstakePercent,
         setCurrentPercent,
-        stakeValue,
-        handleStakeValue,
-        unstakeValue,
-        handleUnstakeValue
+        setCurrentUnstakePercent,
+        stake,
+        handleStake,
+        unstake,
+        handleUnstake
     } = props
 
     const theme = useTheme()
@@ -51,11 +53,10 @@ const Stacking = (props) => {
                 >
                     Staking
                 </Typography>
-                {toogleValue === "stake" && <StakeTable items={info} rows={stakeRows} setCurrentInfo={setCurrentInfo} currentInfo={currentInfo}/>}
-                {toogleValue === "unstake" && <UnstakeTable items={info} rows={unstakeRows} setCurrentInfo={setCurrentInfo} currentInfo={currentInfo}/>}
+                <StakeTable items={info} rows={stakeRows} setCurrentInfo={setCurrentInfo} currentInfo={currentInfo}/>
             </LeftSide>
             <RightSide className={classes.right}>
-                <SecondaryCard>
+                <SecondaryCard className={classes.rightCard}>
                     <SwitchBar value={toogleValue} onClick={setToogleValue}/>
                     {toogleValue === "stake" &&
                         <>
@@ -72,7 +73,9 @@ const Stacking = (props) => {
                                     <div className={classes.labelContainer}>
                                         <Label text="Amount Staked"/>
                                         <Tooltip title="Questions?">
-                                            <QuestionIcon color={theme.palette.text.primary}/>
+                                            <span>
+                                                <QuestionIcon color={theme.palette.text.primary}/>
+                                            </span>
                                         </Tooltip>
                                     </div>
                                     <p style={{ color: theme.palette.text.primary }}>{currentInfo.amount_staked}</p>
@@ -96,13 +99,13 @@ const Stacking = (props) => {
                                 }}>Compound</Button>
                             </div>
                             <SwapField
-                                tokenIcon={aces_logo}
-                                tokenName={"$ACES"}
+                                tokenIcon={stake.icon}
+                                tokenName={stake.name}
                                 leftLabel={"Stake"}
-                                available={"500"}
+                                available={stake.available}
                                 valueText={"MAX"}
-                                onChange={handleStakeValue}
-                                value={stakeValue}
+                                onChange={handleStake}
+                                value={stake.value}
                             />
                             <div className={classes.percentButns}>
                                 {percents.map(el => (
@@ -119,7 +122,7 @@ const Stacking = (props) => {
                             </div>
                             <CustomButton
                                 text="Stake & Claim Rewards"
-                                disabled={stakeValue.length === 0}
+                                disabled={stake.value.length === 0}
                             />
                         </>
                     }
@@ -153,22 +156,22 @@ const Stacking = (props) => {
                                 </div>
                             </div>
                             <SwapField
-                                tokenIcon={aces_logo}
-                                tokenName={"$ACES"}
+                                tokenIcon={unstake.icon}
+                                tokenName={unstake.name}
                                 leftLabel={"Unstake"}
-                                available={"55.51134"}
+                                available={unstake.available}
                                 // valueText={"MAX"}
-                                onChange={handleUnstakeValue}
-                                value={unstakeValue}
+                                onChange={handleUnstake}
+                                value={unstake.value}
                             />
                             <div className={classes.percentButns}>
                                 {percents.map(el => (
                                     <Button
                                         style={{
-                                            backgroundColor: currentPercent === el ? `${theme.palette.secondary.main}` : `${theme.palette.background.buttonSecondary}`,
+                                            backgroundColor: currentUnstakePercent === el ? `${theme.palette.secondary.main}` : `${theme.palette.background.buttonSecondary}`,
                                             color: theme.palette.text.primary
                                         }}
-                                        onClick={() => setCurrentPercent(el)}
+                                        onClick={() => setCurrentUnstakePercent(el)}
                                     >
                                         {el}%
                                     </Button>
@@ -176,7 +179,7 @@ const Stacking = (props) => {
                             </div>
                             <CustomButton
                                 text="Unstake"
-                                disabled={unstakeValue.length === 0}
+                                disabled={!unstake.value}
                             />
                         </>
                     }

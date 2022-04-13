@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Stacking from './Staking'
+import aces_logo from '../../Assets/Icons/aces_logo.png'
 
 const StackingContainer = (props) => {
     const [toogleValue, setToogleValue] = useState("stake")
     const [currentPercent, setCurrentPercent] = useState(50)
-    const [stakeValue, setStakeValue] = useState("")
-    const [unstakeValue, setUnstakeValue] = useState("")
+    const [currentUnstakePercent, setCurrentUnstakePercent] = useState(50)
 
     const info = [
         {
@@ -35,6 +35,99 @@ const StackingContainer = (props) => {
 
     const [currentInfo, setCurrentInfo] = useState(info[0])
 
+    const [stake, setStake] = useState({
+        icon: aces_logo,
+        name: "$ACES",
+        available: 500,
+        value: ""
+    })
+
+    const [unstake, setUnstake] = useState({
+        icon: aces_logo,
+        name: "$ACES",
+        available: 500,
+        value: ""
+    })
+
+    const handleStake = (value) => {
+        const numberValue = Number(value)
+        setCurrentPercent(0)
+        if(numberValue <= stake.available) {
+            setStake({
+                ...stake,
+                value: numberValue
+            })
+            if(numberValue % 25 === 0){
+                setCurrentPercent(75)
+            }
+        }else {
+            setStake({
+                ...stake,
+                value: stake.available
+            })
+            setCurrentPercent(100)
+        }
+    }
+
+    const handleUnstake = (value) => {
+        const numberValue = Number(value)
+        setCurrentUnstakePercent(0)
+        if(numberValue <= unstake.available) {
+            setUnstake({
+                ...unstake,
+                value: numberValue
+            })
+        }else {
+            setUnstake({
+                ...unstake,
+                value: unstake.available
+            })
+        }
+    }
+
+    const handleStakePercent = (value) => {
+        setCurrentPercent(Number(value))
+        setStake({
+            ...stake,
+            value: stake.available / 100 * Number(value)
+        })
+    }
+
+    const handleUnstakePercent = (value) => {
+        setCurrentUnstakePercent(Number(value))
+        setUnstake({
+            ...unstake,
+            value: unstake.available / 100 * Number(value)
+        })
+    }
+
+    useEffect(() => {
+        if(stake.value === stake.available) {
+            setCurrentPercent(100)
+        }else if(stake.value === stake.available * 0.75) {
+            setCurrentPercent(75)
+        }else if(stake.value === stake.available / 2) {
+            setCurrentPercent(50)
+        }else if(stake.value === stake.available / 4){
+            setCurrentPercent(25)
+        }else {
+            setCurrentPercent(0)
+        }
+        
+        if(unstake.value === unstake.available) {
+            setCurrentUnstakePercent(100)
+        }else if(unstake.value === unstake.available * 0.75) {
+            setCurrentUnstakePercent(75)
+        }else if(unstake.value === unstake.available / 2) {
+            setCurrentUnstakePercent(50)
+        }else if(unstake.value === unstake.available / 4){
+            setCurrentUnstakePercent(25)
+        }else {
+            setCurrentUnstakePercent(0)
+        }
+
+    }, [stake, unstake])
+
     return (
         <>
             <Stacking
@@ -44,11 +137,13 @@ const StackingContainer = (props) => {
                 currentInfo={currentInfo}
                 setCurrentInfo={setCurrentInfo}
                 currentPercent={currentPercent}
-                setCurrentPercent={setCurrentPercent}
-                stakeValue={stakeValue}
-                handleStakeValue={setStakeValue}
-                unstakeValue={unstakeValue}
-                handleUnstakeValue={setUnstakeValue}
+                currentUnstakePercent={currentUnstakePercent}
+                setCurrentPercent={handleStakePercent}
+                setCurrentUnstakePercent={handleUnstakePercent}
+                unstake={unstake}
+                handleUnstake={handleUnstake}
+                handleStake={handleStake}
+                stake={stake}
             />
         </>
     )
