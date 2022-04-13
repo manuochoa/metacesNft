@@ -91,7 +91,7 @@
 
 @media screen and (max-width: 568px) {
     .main {
-        min-height: calc(100 - 135px) !important;
+        min-height: calc(100vh - 133px) !important;
     }
     .left {
         padding: 15px;
@@ -104,6 +104,7 @@
         transition-duration: .3s;
         display: flex;
         flex-direction: column;
+        margin-top: auto;
     }
     .header button {
         display: flex;
