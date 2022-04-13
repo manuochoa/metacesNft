@@ -157,6 +157,7 @@ const Lottery = (props) => {
 
     const handleShowSwap = () => {
         setIsShowSwap(!isShowSwap)
+        firstInputRef.current.focus()
     }
 
     const timer = null
