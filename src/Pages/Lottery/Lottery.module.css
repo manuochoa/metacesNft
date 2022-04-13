@@ -123,6 +123,9 @@
 }
 
 @media screen and (max-width: 568px) {
+    .main {
+        min-height: calc(100vh - 133px);
+    }
     .left {
         padding: 15px;
     }
