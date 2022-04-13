@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Route, BrowserRouter as Router, Routes, Navigate } from "react-router-dom";
 import HttpsRedirect from 'react-https-redirect';
 import './App.css';
@@ -8,6 +8,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import NftLotteryContainer from './Pages/NFT Lottery/NftLotteryContainer';
 import NftMintingContainer from './Pages/NFT Minting/NftMintingContainer';
 import StackingContainer from './Pages/Stacking/StackingContainer';
+import ConnectWallet from './Components/Modal/ConnectWallet/ConnectWallet'
 
 const theme = createTheme({
   palette: {
@@ -37,12 +38,27 @@ const theme = createTheme({
 
 const App = () => {
 
+  const [isShowConnectWallet, setIsShowConnectWallet] = useState(false)
+
+  const handleShowWallet = () => {
+    setIsShowConnectWallet(!isShowConnectWallet)
+  }
+
+  useEffect(() => {
+    if(isShowConnectWallet) {
+      document.body.style.overflow = 'hidden'
+    }else {
+        document.body.style.overflow = 'unset'
+    }
+  }, [isShowConnectWallet])
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <HttpsRedirect>
           <div className='main' style={{ backgroundColor: theme.palette.background.main }}>
-            <Navbar/>
+            <Navbar handleWallet={handleShowWallet}/>
+            {isShowConnectWallet && <ConnectWallet onClose={handleShowWallet}/>}
             <div className='content'>
               <Routes>
                 <Route path="/" element={<LotteryContainer/>} />

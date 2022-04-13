@@ -103,6 +103,28 @@ const TabTable = (props) => {
                     </div>
                 </>
                 }
+                {tabIndex === 1 &&
+                <>
+                    <div className={classes.tables}>
+                        <div className={classes.table}>
+                            <TableComponent items={items.slice(0, 10).reverse()} rows={rows}/>
+                        </div>
+                        <div className={classes.secondTable}>
+                            <TableComponent items={items.slice(-10)} rows={rows} second={true}/>
+                        </div>
+                    </div>
+                    <div className={classes.pagination}>
+                        <Pagination 
+                            page={1}
+                            count={10} 
+                            classes={materialPagination} 
+                            size={"small"}
+                            boundaryCount={1}
+                            siblingCount={0}
+                        />
+                    </div>
+                </>
+                }
             </div>
         </div>
     )

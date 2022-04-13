@@ -6,11 +6,18 @@ import logo from '../../../Assets/logo.png'
 import SunIcon from '../../UI/Icons/SunIcon'
 import { NavLink } from 'react-router-dom'
 import Burger from './Burger/Burger'
+import { useTheme } from '@emotion/react'
 
 const Navbar = (props) => {
+    const { handleWallet } = props
+
+    const theme = useTheme()
+
     return (
         <div className={classes.main}>
-            <div className={classes.left}>
+            <div className={classes.left} style={{
+                backgroundColor: theme.palette.background.main
+            }}>
                 <img src={logo} alt="logo" className={classes.logo}/>
                 <div className={classes.links}>
                     <NavLink to="/" className={(navData) => (navData.isActive ? classes.active : '')}>Lottery</NavLink>
@@ -35,7 +42,7 @@ const Navbar = (props) => {
                         <div className={classes.statusCircle}/>
                         <p>BSC</p>
                     </div>
-                    <Button className={classes.walletBut}>Connect Wallet</Button>
+                    <Button onClick={handleWallet} className={classes.walletBut}>Connect Wallet</Button>
                 </div>
             </div>
         </div>

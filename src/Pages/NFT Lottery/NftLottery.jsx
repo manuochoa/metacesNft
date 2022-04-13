@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material'
-import React from 'react'
+import { IconButton, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import CurrentJackpot from '../../Components/Common/CurrentJackpot/CurrentJackpot'
 import TabTable from '../../Components/Common/TabTable/TabTable'
 import LeftSide from '../../Components/UI/Sides/LeftSide/LeftSide'
@@ -13,6 +13,10 @@ import nft4 from '../../Assets/nft4.jpg'
 import NftSmallItem from '../../Components/NFT/NftSmallItem/NftSmallItem'
 import { useNavigate } from 'react-router-dom'
 import SecondaryCard from '../../Components/UI/Cards/SecondaryCard/SecondaryCard'
+import CloseIcon from '../../Components/UI/Icons/CloseIcon'
+import { useTheme } from '@emotion/react'
+import { cx } from '../../Utils/classnames'
+import ArrowLeftIcon from '../../Components/UI/Icons/ArrowLeftIcon'
 
 const NftLottery = (props) => {
     const values = [
@@ -132,6 +136,14 @@ const NftLottery = (props) => {
 
     const navigate = useNavigate()
 
+    const theme = useTheme()
+
+    const [isShowNft, setIsShowNft] = useState(false)
+
+    const handleShow = () => {
+        setIsShowNft(!isShowNft)
+    }
+
     const onClick = () => {
         navigate(`/nft_minting`)
     }
@@ -144,7 +156,7 @@ const NftLottery = (props) => {
                     <TabTable items={values}/>
                 </div>
             </LeftSide>
-            <RightSide className={classes.right}>
+            <RightSide className={cx(classes.right, isShowNft ? classes.showNft : '')}>
                 <div className={classes.desktop}>
                     <Typography variant='h4' color="primary">Eligible NFT's</Typography>
                     <div className={classes.wrapper}>
@@ -153,8 +165,21 @@ const NftLottery = (props) => {
                         ))}
                     </div>
                 </div>
-                <SecondaryCard className={classes.secCard}>
-                    <Typography variant='h4' color="primary">Eligible NFT's</Typography>
+                <SecondaryCard className={cx(classes.secCard, isShowNft ? classes.showNftCard : '')}>
+                    <div className={classes.header}>
+                        <Typography variant='h4' color="primary">Eligible NFT's</Typography>
+                        <IconButton
+                            onClick={handleShow}
+                            style={{
+                                backgroundColor: theme.palette.background.buttonSecondary,
+                                color: theme.palette.primary.main,
+                                borderRadius: 8
+                            }}
+                        >   
+                            {!isShowNft && <ArrowLeftIcon/>}
+                            {isShowNft && <CloseIcon color={theme.palette.text.primary}/>}
+                        </IconButton>
+                    </div>
                     <div className={classes.wrapper}>
                         {nfts.map(el => (
                             <NftSmallItem item={el}/>

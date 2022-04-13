@@ -90,6 +90,9 @@
     font-size: 14px;
     margin-top: 24px;
 }
+.showButt {
+    display: none !important;
+}
 
 @media screen and (max-width: 1366px) {
     .left {
@@ -132,6 +135,36 @@
     .table > div > div {
         overflow-y: auto;
         max-height: unset
+    }
+    .right {
+        max-height: 90px !important;
+        overflow-y: hidden;
+        bottom: 0;
+        z-index: 20;
+        transition-duration: .3s;
+        display: flex;
+        flex-direction: column;
+    }
+    .right .actions button {
+        display: none;
+    }
+    .showButt {
+        display: flex !important;
+    }
+    .showButt svg {
+        transform: rotate(-90deg);
+    }
+    .showSwap {
+        max-height: 100vh !important;
+        padding: 0 !important;
+        position: fixed;
+        transition-duration: .3s;
+    }
+    .showSwap .actions button {
+        display: flex;
+    }
+    .showSwapCard {
+        margin-top: auto;
     }
 }
 

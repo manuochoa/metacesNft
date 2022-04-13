@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react'
 import { Divider, IconButton, Tooltip, Typography } from '@mui/material'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CurrentJackpot from '../../Components/Common/CurrentJackpot/CurrentJackpot'
 import TabTable from '../../Components/Common/TabTable/TabTable'
 import MainCard from '../../Components/UI/Cards/MainCard/MainCard'
@@ -19,6 +19,9 @@ import ArrowsChangeIcon from '../../Components/UI/Icons/ArrowsChangeIcon'
 import CustomButton from '../../Components/UI/Button/CustomButton'
 import { parseMoney } from '../../Utils/parseMoney'
 import useWindowDimensions from '../../Hooks/useWindowDimension'
+import { cx } from '../../Utils/classnames'
+import CloseIcon from '../../Components/UI/Icons/CloseIcon'
+import ArrowLeftIcon from '../../Components/UI/Icons/ArrowLeftIcon'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -150,6 +153,12 @@ const Lottery = (props) => {
 
     const { width } = useWindowDimensions()
 
+    const [isShowSwap, setIsShowSwap] = useState(false)
+
+    const handleShowSwap = () => {
+        setIsShowSwap(!isShowSwap)
+    }
+
     const timer = null
 
     const handleFocus = () => {
@@ -167,13 +176,21 @@ const Lottery = (props) => {
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        if(isShowSwap) {
+            document.body.style.overflow = 'hidden'
+        }else {
+            document.body.style.overflow = 'unset'
+        }
+    }, [isShowSwap])
+
     return(
         <div className={classes.main}>
             <LeftSide className={classes.left}>
                 <CurrentJackpot 
                     cash={"38,881.34"} 
                     actionText={"Buy Entry"}
-                    onClick={handleFocus}
+                    onClick={handleShowSwap}
                 />
                 <div className={classes.tickets}>
                     <MainCard className={classes.ticket}>
@@ -193,8 +210,8 @@ const Lottery = (props) => {
                     <TabTable items={values}/>
                 </div>
             </LeftSide>
-            <RightSide className={classes.right}>
-                <SecondaryCard className={classes.rightCard}>
+            <RightSide className={cx(classes.right, isShowSwap ? classes.showSwap : '')}>
+                <SecondaryCard className={cx(classes.rightCard, isShowSwap ? classes.showSwapCard : '')}>
                     <div className={classes.rightHeader}>
                         <Typography variant='h4' color={"primary"}>Swap Tokens</Typography>
                         <div className={classes.actions}>
@@ -215,6 +232,18 @@ const Lottery = (props) => {
                                 }}  
                             >
                                 <HistoryIcon/>
+                            </IconButton>
+                            <IconButton
+                                onClick={handleShowSwap}
+                                className={classes.showButt}
+                                style={{
+                                    backgroundColor: theme.palette.background.buttonSecondary,
+                                    color: theme.palette.primary.main,
+                                    borderRadius: "8px"
+                                }}  
+                            >
+                                {!isShowSwap && <ArrowLeftIcon/>}
+                                {isShowSwap && <CloseIcon color={theme.palette.primary.main}/>}
                             </IconButton>
                         </div>
                     </div>

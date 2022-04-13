@@ -4,24 +4,17 @@
 
 @media screen and (max-width: 1170px) {
   .content {
-    max-height: calc(100vh - 133px);
-    overflow-y: scroll;
-    padding-bottom: 30px;
+    padding-top: 74px;
+    margin-bottom: 67px !important;
   }
 }
 
 @media screen and (max-width: 568px) {
-  .content {
-    max-height: calc(100vh - 146px);
-    overflow-y: scroll;
-    padding-bottom: 30px;
-  }
+  
 }
 
 @media screen and (max-width: 414px) {
   .content {
-    max-height: calc(100vh - 135px);
-    overflow-y: scroll;
-    padding-bottom: 30px;
+    margin-bottom: 59px !important;
   }
 }
