@@ -1,17 +1,29 @@
-import React from 'react';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import store from './Redux/reduxStore';
-import * as ReactDOM from 'react-dom';
+import store from "./Redux/reduxStore";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import { createRoot } from "react-dom/client";
+import { MoralisProvider } from "react-moralis";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+let persistor = persistStore(store);
+
+const root = createRoot(document.getElementById("root"));
 
 // Initial render: Render an element to the root.
 root.render(
   <Provider store={store}>
-    <App />
+    <PersistGate persistor={persistor}>
+      <MoralisProvider
+        serverUrl="https://t1dgflyg2uft.bigmoralis.com:2053/server"
+        appId="q6NZenv0ACYx24jH2tfz1ZrQSNhyLRUqDmofDy3f"
+      >
+        <App />
+      </MoralisProvider>
+    </PersistGate>
   </Provider>
 );
 
