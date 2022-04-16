@@ -69,7 +69,10 @@ export const mintNft = (amount) => {
         (reduxStore.nft.price * amount).toString()
       );
 
-      let tx = await newNftInstance.mint(amount, { value, gasLimit: 300000 });
+      let tx = await newNftInstance.mint(amount, {
+        value,
+        gasLimit: 250000 * amount,
+      });
 
       let receipt = await tx.wait();
 
