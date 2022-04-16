@@ -89,7 +89,7 @@ const NftMinting = (props) => {
           >
             <div className={classes.stage}>
               <p style={{ color: theme.palette.text.primary }}>
-                {limit} x {nft.price} BNB
+                {limit} x {nft.price} ETH
               </p>
               <Label text="Excluding gas fee" />
             </div>
@@ -101,7 +101,7 @@ const NftMinting = (props) => {
               }}
             />
             <div className={classes.stage}>
-              <Typography variant="h4">{nft.price * limit} BNB</Typography>
+              <Typography variant="h4">{nft.price * limit} ETH</Typography>
               <Label text="Price" />
             </div>
           </div>
