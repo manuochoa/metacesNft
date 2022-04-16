@@ -44,9 +44,9 @@ contract ACELotto {
         require(entries > 0, "Not enough $ACES to enter");
 
         roundEntry[roundEntries] = _sender;
-        entriesPerRound[roundNum][_sender]++;
         lastRoundEntered[_sender] = roundNum;       
         lastBalanceRecorded[_sender] = userBalance;
+        entriesPerRound[roundNum][_sender] += entries;
         roundEntries += entries;
     }
 

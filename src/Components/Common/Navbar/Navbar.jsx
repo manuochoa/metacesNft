@@ -63,7 +63,7 @@ const Navbar = (props) => {
         <div className={classes.walletButContainer}>
           <div className={classes.bsc}>
             <div className={classes.statusCircle} />
-            <p>BSC</p>
+            <p>ETH</p>
           </div>
           <Button onClick={handleWallet} className={classes.walletBut}>
             {userAddress
