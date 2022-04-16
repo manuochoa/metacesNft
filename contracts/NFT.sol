@@ -9,9 +9,9 @@ contract metacesNFT is ERC721Enumerable, Ownable {
     using Strings for uint256;
 
     uint256 public price = 0.01 ether;
-    uint256 public walletLimit = 10;
+    uint256 public walletLimit = 20;
     uint256 public saleStart;
-    uint256 public MAX_SUPPLY = 10000;
+    uint256 public MAX_SUPPLY = 5000;
 
     string public baseURI;
 
@@ -30,11 +30,11 @@ contract metacesNFT is ERC721Enumerable, Ownable {
         require(balance <= walletLimit, "exceeds minting limit per wallet");
         require(totalSupply() + _amount <= MAX_SUPPLY, "exceeds max supply");
         require(_amount <= 10, "exceeds max buy amount");
-        require(_amount * price <= msg.value, "not enough BNB to buy");
+        require(_amount * price <= msg.value, "not enough ETH to buy");
 
-        uint256 _tokenId = totalSupply() + 1;
+        uint256 _tokenId = totalSupply();
 
-        for (uint256 i = 0; i < _amount; i++) {
+        for (uint256 i = 1; i <= _amount; i++) {
             _mint(msg.sender, _tokenId + i);
         }
     }

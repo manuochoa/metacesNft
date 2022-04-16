@@ -45,7 +45,7 @@ const NftMinting = (props) => {
                 {nft.minted}
               </p>
               <p style={{ color: theme.palette.text.secondary }}>
-                &nbsp;/ 10,000
+                &nbsp;/ 5,000
               </p>
             </div>
           </div>

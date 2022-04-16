@@ -33,7 +33,7 @@ let provider = new ethers.providers.JsonRpcProvider(
 //   "https://data-seed-prebsc-2-s2.binance.org:8545/"
 // );
 
-let nftAddress = "0x6eE1a4d158763358Beb84A5fc721408e23F44d66";
+let nftAddress = "0x061877f578C1dAe494d16782E05f908b0053C999";
 
 let nftInstance = new ethers.Contract(nftAddress, nftABI, provider);
 
