@@ -80,7 +80,13 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_user",
+						"type": "address"
+					}
+				],
 				"name": "enterLotto",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -259,24 +265,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_user",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_entries",
-						"type": "uint256"
-					}
-				],
-				"name": "swapAddEntry",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "ticketPrice",
 				"outputs": [
@@ -339,11 +327,11 @@
 			]
 		},
 		"lotto.sol": {
-			"keccak256": "0xbf76e87698f4533659386c7baeefaba15aa8cc77be6eb905721cf48deda0fad4",
+			"keccak256": "0xdae9ad7b27aeffcb161de50b74feafbf98d3c4010ac6bf61f67ff8a794ca812c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://35b9ae247784ea047128c3d1b0dfc384e36ae38e6c04c8293e88ac7cc6438d51",
-				"dweb:/ipfs/Qme5YrymCGfi3xJHrvwock5naBMzwZJmE38ZwFvMzaWqgx"
+				"bzz-raw://d99f83edaba123b62ecdb51c88ba0d8e8ba1f9dc2b87ef133d73a09ae63181f9",
+				"dweb:/ipfs/QmXKag6G5i8AKEibFrJ2y7NKZ21kR3v83ps6WRr34r4PLc"
 			]
 		}
 	},

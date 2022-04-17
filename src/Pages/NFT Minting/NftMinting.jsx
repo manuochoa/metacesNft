@@ -12,9 +12,9 @@ import { mintNft } from "../../Redux/reduxActions";
 
 const NftMinting = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { item, limit, handleLimit, coinRate } = props;
+  const { item, limit, handleLimit, handleWallet } = props;
   const dispatch = useDispatch();
-  let { nft } = useSelector((state) => state.common);
+  let { nft, userAddress } = useSelector((state) => state.common);
 
   const theme = useTheme();
 
@@ -105,7 +105,11 @@ const NftMinting = (props) => {
               <Label text="Price" />
             </div>
           </div>
-          <CustomButton disabled={isLoading} onClick={handleMint} text="Mint" />
+          <CustomButton
+            disabled={isLoading}
+            onClick={userAddress ? handleMint : handleWallet}
+            text="Mint"
+          />
         </SecondaryCard>
       </RightSide>
     </div>

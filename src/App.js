@@ -20,6 +20,8 @@ import {
   connectWalletConnect,
   disconnectWallet,
   getNftData,
+  getLevelsInfo,
+  getUserInfo,
 } from "./Redux/reduxActions";
 
 const theme = createTheme({
@@ -51,7 +53,9 @@ const theme = createTheme({
 const App = () => {
   const [isShowConnectWallet, setIsShowConnectWallet] = useState(false);
   const dispatch = useDispatch();
-  let { userAddress, connectionType } = useSelector((state) => state.common);
+  let { userAddress, connectionType, chainId } = useSelector(
+    (state) => state.common
+  );
 
   const handleShowWallet = () => {
     if (!userAddress) {
@@ -75,6 +79,7 @@ const App = () => {
           break;
       }
     }
+    dispatch(getLevelsInfo());
   }, []);
 
   useEffect(() => {
@@ -103,7 +108,11 @@ const App = () => {
             className="main"
             style={{ backgroundColor: theme.palette.background.main }}
           >
-            <Navbar userAddress={userAddress} handleWallet={handleShowWallet} />
+            <Navbar
+              chainId={chainId}
+              userAddress={userAddress}
+              handleWallet={handleShowWallet}
+            />
             {isShowConnectWallet && (
               <ConnectWallet
                 dispatch={dispatch}
@@ -115,7 +124,12 @@ const App = () => {
             <div className="content">
               <Routes>
                 <Route path="/" element={<LotteryContainer />} />
-                <Route path="nft_minting" element={<NftMintingContainer />} />
+                <Route
+                  path="nft_minting"
+                  element={
+                    <NftMintingContainer handleWallet={handleShowWallet} />
+                  }
+                />
                 <Route path="nft_lottery" element={<NftLotteryContainer />} />
                 <Route path="staking" element={<StackingContainer />} />
                 <Route path="*" element={<Navigate to="/" />} />

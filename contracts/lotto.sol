@@ -37,22 +37,17 @@ contract ACELotto {
         acesSwap = _swap;
     }
 
-    function enterLotto() external {
-        address _sender = msg.sender;
-        uint256 userBalance = acesToken.balanceOf(_sender);
-        uint256 entries = (userBalance - lastBalanceRecorded[_sender]) % ticketPrice;
-        require(entries > 0, "Not enough $ACES to enter");
+    function enterLotto(address _user) external {
+        uint256 userBalance = acesToken.balanceOf(_user);
+        uint256 entries = (userBalance - lastBalanceRecorded[_user]) % ticketPrice;
+        require(entries > 0 || msg.sender == acesSwap, "Not enough $ACES to enter"); // msg.sender == acesSwap to avoid revert during swap
 
-        roundEntry[roundEntries] = _sender;
-        lastRoundEntered[_sender] = roundNum;       
-        lastBalanceRecorded[_sender] = userBalance;
-        entriesPerRound[roundNum][_sender] += entries;
+        
+        roundEntry[roundEntries] = _user;
+        lastRoundEntered[_user] = roundNum;       
+        lastBalanceRecorded[_user] = userBalance;
+        entriesPerRound[roundNum][_user] += entries;
         roundEntries += entries;
-    }
-
-    function swapAddEntry(address _user, uint256 _entries) external {
-        require(msg.sender == acesSwap, "Only swap can call this function");
-
     }
 
     function addEntry (address _user, uint256 _entries) internal {

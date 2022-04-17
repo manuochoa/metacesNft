@@ -2,12 +2,19 @@ import { ethers, providers } from "ethers";
 import Web3 from "web3";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import store from "./reduxStore";
-import { nftABI } from "../abis/abis";
+import { nftABI, stakingABI, tokenABI } from "../abis/abis";
 import { useSelector } from "react-redux";
 
 const updateUser = (payload) => {
   return {
     type: "UPDATE_USER",
+    payload: payload,
+  };
+};
+
+const updateChain = (payload) => {
+  return {
+    type: "UPDATE_CHAIN",
     payload: payload,
   };
 };
@@ -26,16 +33,180 @@ const updateNftValues = (payload) => {
   };
 };
 
+const updateStakingValues = (payload) => {
+  return {
+    type: "UPDATE_STAKING",
+    payload: payload,
+  };
+};
+
+const updateUserStaking = (payload) => {
+  return {
+    type: "UPDATE_USER_STAKING",
+    payload: payload,
+  };
+};
+
 let provider = new ethers.providers.JsonRpcProvider(
   "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
 );
-// let provider = new ethers.providers.JsonRpcProvider(
-//   "https://data-seed-prebsc-2-s2.binance.org:8545/"
-// );
+let BSCprovider = new ethers.providers.JsonRpcProvider(
+  "https://data-seed-prebsc-2-s2.binance.org:8545/"
+);
 
 let nftAddress = "0x061877f578C1dAe494d16782E05f908b0053C999";
+let tokenAddress = "0xd17485e114e33e581cF58975cf8cAe0909985fE7"; //token on BSC
+let stakingAddress = "0x878EF4bA030A00970cFbf5D95c1a86DA9cF159f3"; //staking on BSC
 
 let nftInstance = new ethers.Contract(nftAddress, nftABI, provider);
+let tokenInstance = new ethers.Contract(tokenAddress, tokenABI, BSCprovider);
+let stakingInstance = new ethers.Contract(
+  stakingAddress,
+  stakingABI,
+  BSCprovider
+);
+
+// STAKING FUNCTIONS
+
+export const initAction = (type, level, _amount) => {
+  return async (dispatch) => {
+    try {
+      let signer = store.getState().signer;
+      let newStakingInstance = new ethers.Contract(
+        stakingAddress,
+        stakingABI,
+        signer.signer
+      );
+
+      let tx;
+      let amount = _amount ? ethers.utils.parseUnits(_amount, 9) : "";
+
+      switch (type) {
+        case "DEPOSIT":
+          tx = await newStakingInstance.deposit(amount, level);
+          break;
+        case "WITHDRAW":
+          tx = await newStakingInstance.withdraw(amount, level);
+          break;
+        case "CLAIM":
+          tx = await newStakingInstance.claim(level);
+          break;
+        case "COMPOUND":
+          tx = await newStakingInstance.compound(level);
+          break;
+        case "APPROVE":
+          let newTokenInstance = new ethers.Contract(
+            tokenAddress,
+            tokenABI,
+            signer.signer
+          );
+          tx = await newTokenInstance.approve(
+            stakingAddress,
+            "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+          );
+          break;
+        default:
+          break;
+      }
+
+      let receipt = await tx.wait();
+
+      dispatch(getUserInfo());
+
+      return receipt;
+    } catch (error) {
+      console.log(error, "initAction");
+      if (error.data) {
+        window.alert(error.data.message);
+      }
+    }
+  };
+};
+
+export const getLevelsInfo = () => {
+  return async (dispatch) => {
+    try {
+      let data = await stakingInstance.getLevelsInfo();
+
+      dispatch(
+        updateStakingValues({
+          level0: {
+            daily_back: Number(data.level0.APY / 365) / 100,
+            period: timeLeft(data.level0.lockPeriod * 1000),
+          },
+          level1: {
+            daily_back: Number(data.level1.APY / 365) / 100,
+            period: timeLeft(data.level1.lockPeriod * 1000),
+          },
+          level2: {
+            daily_back: Number(data.level2.APY / 365) / 100,
+            period: timeLeft(data.level2.lockPeriod * 1000),
+          },
+        })
+      );
+    } catch (error) {
+      console.log(error, "getLevelsInfo");
+    }
+  };
+};
+
+export const getUserInfo = (userAddress) => {
+  return async (dispatch) => {
+    try {
+      if (!userAddress) {
+        let reduxStore = store.getState().common;
+        userAddress = reduxStore.userAddress;
+      }
+      let data = await stakingInstance.getUserInfo(userAddress);
+      let balance = await tokenInstance.balanceOf(userAddress);
+      let allowance = await tokenInstance.allowance(
+        userAddress,
+        stakingAddress
+      );
+
+      dispatch(
+        updateUserStaking({
+          balance: ethers.utils.formatUnits(balance, 9),
+          isApproved: Number(allowance) > 0,
+          level0: {
+            balance: ethers.utils.formatUnits(data.level0.balance, 9),
+            claimed: ethers.utils.formatUnits(data.level0.claimed, 9),
+            lastClaim: Number(data.level0.lastClaim * 1000),
+            started: Number(data.level0.started * 1000),
+            unlockTime: Number(data.level0.unlockTime * 1000),
+            earnings: Number(
+              ethers.utils.formatUnits(data.level0Rewards, 9)
+            ).toFixed(2),
+          },
+          level1: {
+            balance: ethers.utils.formatUnits(data.level1.balance, 9),
+            claimed: ethers.utils.formatUnits(data.level1.claimed, 9),
+            lastClaim: Number(data.level1.lastClaim * 1000),
+            started: Number(data.level1.started * 1000),
+            unlockTime: Number(data.level1.unlockTime * 1000),
+            earnings: Number(
+              ethers.utils.formatUnits(data.level1Rewards, 9)
+            ).toFixed(2),
+          },
+          level2: {
+            balance: ethers.utils.formatUnits(data.level2.balance, 9),
+            claimed: ethers.utils.formatUnits(data.level2.claimed, 9),
+            lastClaim: Number(data.level2.lastClaim * 1000),
+            started: Number(data.level2.started * 1000),
+            unlockTime: Number(data.level2.unlockTime * 1000),
+            earnings: Number(
+              ethers.utils.formatUnits(data.level2Rewards, 9)
+            ).toFixed(2),
+          },
+        })
+      );
+    } catch (error) {
+      console.log(error, "getUserInfo");
+    }
+  };
+};
+
+// NFT FUNCTIONS
 
 export const getNftData = () => {
   return async (dispatch) => {
@@ -85,6 +256,8 @@ export const mintNft = (amount) => {
   };
 };
 
+// WALLET CONNECTION
+
 export const connectMetamask = () => {
   return async (dispatch) => {
     try {
@@ -94,11 +267,22 @@ export const connectMetamask = () => {
       });
 
       let userAddress = accounts[0];
+      const id = await window.ethereum.request({
+        method: "eth_chainId",
+      });
 
+      let chainId = parseInt(id, 16);
+      console.log(chainId, "chainId");
+
+      dispatch(
+        updateChain({
+          chainId,
+        })
+      );
       dispatch(getSigner());
+      dispatch(getUserInfo(userAddress));
 
       window.ethereum.on("accountsChanged", function (accounts) {
-        // dispatch(getUserNumbers(accounts[0]));
         dispatch(
           updateUser({
             userAddress: accounts[0],
@@ -106,19 +290,19 @@ export const connectMetamask = () => {
             provider: null,
           })
         );
+        dispatch(getSigner());
+        dispatch(getUserInfo(accounts[0]));
       });
 
-      window.ethereum.on("chainChanged", (_chainId) =>
-        window.location.reload()
-      );
+      window.ethereum.on("chainChanged", (_chainId) => {
+        window.location.reload();
+      });
 
       if (userAddress) {
-        // dispatch(getUserNumbers(userAddress));
         dispatch(
           updateUser({
             userAddress,
             connectionType: "metamask",
-            provider: null,
           })
         );
       }
@@ -150,13 +334,26 @@ export const connectWalletConnect = () => {
       const web3 = new Web3(provider);
 
       const accounts = await web3.eth.getAccounts();
+      let chainId = await web3.eth.getChainId();
+
+      dispatch(
+        updateChain({
+          chainId,
+        })
+      );
+
+      dispatch(getUserInfo(accounts[0]));
 
       provider.on("accountsChanged", (accounts) => {
-        updateUser({
-          userAddress: accounts[0],
-          connectionType: "WALLET_CONNECT",
-          provider,
-        });
+        console.log(accounts);
+        dispatch(
+          updateUser({
+            userAddress: accounts[0],
+            connectionType: "WALLET_CONNECT",
+          })
+        );
+        dispatch(getUserInfo(accounts[0]));
+        dispatch(getSigner("WALLET_CONNECT", provider));
       });
 
       // Subscribe to session disconnection
@@ -164,12 +361,19 @@ export const connectWalletConnect = () => {
         dispatch(disconnectWallet());
       });
 
+      provider.on("chainChanged", (chainId) => {
+        dispatch(
+          updateChain({
+            chainId,
+          })
+        );
+      });
+
       if (accounts) {
         dispatch(
           updateUser({
             userAddress: accounts[0],
             connectionType: "WALLET_CONNECT",
-            provider,
           })
         );
       }
@@ -211,6 +415,8 @@ export const disconnectWallet = () => {
   };
 };
 
+// PROVIDER SIGNER
+
 const getSigner = (walletType, provider) => {
   return async (dispatch) => {
     try {
@@ -233,4 +439,27 @@ const getSigner = (walletType, provider) => {
       console.log(error, "signer");
     }
   };
+};
+
+const timeLeft = (time) => {
+  const second = 1000;
+  const minute = second * 60;
+  const hour = minute * 60;
+  const day = hour * 24;
+
+  let hours = Math.floor((time % day) / hour).toLocaleString(undefined, {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  });
+  let days = Math.floor(time / day);
+  let minutes = Math.floor((time % hour) / minute).toLocaleString(undefined, {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  });
+
+  if (days <= 0) {
+    return `${hours > 0 ? `${hours} Hours, ` : ""}${minutes} Minutes`;
+  }
+
+  return `${days} Days`;
 };

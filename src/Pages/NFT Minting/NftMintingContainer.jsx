@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import NftMinting from "./NftMinting";
 import nft1 from "../../Assets/nftBig.png";
 
-const NftMintingContainer = (props) => {
+const NftMintingContainer = ({ handleWallet }) => {
   const [currentNft, setCurrentNft] = useState({
     image: nft1,
   });
@@ -26,6 +26,7 @@ const NftMintingContainer = (props) => {
   return (
     <>
       <NftMinting
+        handleWallet={handleWallet}
         item={currentNft}
         limit={limit}
         handleLimit={handleLimit}

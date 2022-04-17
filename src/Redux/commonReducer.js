@@ -2,11 +2,54 @@ let initialState = {
   loading: "",
   userAddress: "",
   connectionType: "",
+  chainId: "",
+  acesBalance: "",
+  stakingApproved: false,
   nft: {
     minted: "",
     baseURI: "",
     price: "",
   },
+  staking: [
+    {
+      daily_back: "",
+      period: "",
+    },
+    {
+      daily_back: "",
+      period: "",
+    },
+    {
+      daily_back: "",
+      period: "",
+    },
+  ],
+  userStaking: [
+    {
+      balance: "",
+      claimed: "",
+      lastClaim: "",
+      started: "",
+      unlockTime: "",
+      earnings: "",
+    },
+    {
+      balance: "",
+      claimed: "",
+      lastClaim: "",
+      started: "",
+      unlockTime: "",
+      earnings: "",
+    },
+    {
+      balance: "",
+      claimed: "",
+      lastClaim: "",
+      started: "",
+      unlockTime: "",
+      earnings: "",
+    },
+  ],
 };
 
 let commonReducer = (state = initialState, action) => {
@@ -17,7 +60,11 @@ let commonReducer = (state = initialState, action) => {
         loading: false,
         userAddress: action.payload.userAddress,
         connectionType: action.payload.connectionType,
-        provider: action.payload.provider,
+      };
+    case "UPDATE_CHAIN":
+      return {
+        ...state,
+        chainId: action.payload.chainId,
       };
     case "UPDATE_NFT":
       return {
@@ -28,6 +75,28 @@ let commonReducer = (state = initialState, action) => {
           baseURI: action.payload.baseURI,
           price: action.payload.price,
         },
+      };
+    case "UPDATE_STAKING":
+      return {
+        ...state,
+        loading: false,
+        staking: [
+          action.payload.level0,
+          action.payload.level1,
+          action.payload.level2,
+        ],
+      };
+    case "UPDATE_USER_STAKING":
+      return {
+        ...state,
+        loading: false,
+        acesBalance: action.payload.balance,
+        stakingApproved: action.payload.isApproved,
+        userStaking: [
+          action.payload.level0,
+          action.payload.level1,
+          action.payload.level2,
+        ],
       };
     default: {
       return state;
