@@ -49,7 +49,7 @@ const Stacking = (props) => {
     setCurrentPercent(Number(value));
     setStake({
       ...stake,
-      value: ((acesBalance / 100) * Number(value)).toFixed(0),
+      value: truncateByDecimalPlace((acesBalance / 100) * Number(value), 0),
     });
   };
 
@@ -59,7 +59,8 @@ const Stacking = (props) => {
       ...unstake,
       value:
         userStaking[currentIndex].balance > 0
-          ? ((userStaking[currentIndex].balance / 100) * Number(value)).toFixed(
+          ? truncateByDecimalPlace(
+              (userStaking[currentIndex].balance / 100) * Number(value),
               0
             )
           : 0,
@@ -96,6 +97,10 @@ const Stacking = (props) => {
     }
     setIsLoading(false);
   };
+
+  const truncateByDecimalPlace = (value, numDecimalPlaces) =>
+    Math.trunc(value * Math.pow(10, numDecimalPlaces)) /
+    Math.pow(10, numDecimalPlaces);
 
   return (
     <div className={classes.main}>
