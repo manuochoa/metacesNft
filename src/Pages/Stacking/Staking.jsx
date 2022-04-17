@@ -99,8 +99,10 @@ const Stacking = (props) => {
   };
 
   const truncateByDecimalPlace = (value, numDecimalPlaces) =>
-    Math.trunc(value * Math.pow(10, numDecimalPlaces)) /
-    Math.pow(10, numDecimalPlaces);
+    (
+      Math.trunc(value * Math.pow(10, numDecimalPlaces)) /
+      Math.pow(10, numDecimalPlaces)
+    ).toString();
 
   return (
     <div className={classes.main}>
