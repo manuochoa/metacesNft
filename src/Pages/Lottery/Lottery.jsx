@@ -1,304 +1,352 @@
-import { useTheme } from '@emotion/react'
-import { Divider, IconButton, Tooltip, Typography } from '@mui/material'
-import React, { useEffect, useRef, useState } from 'react'
-import CurrentJackpot from '../../Components/Common/CurrentJackpot/CurrentJackpot'
-import TabTable from '../../Components/Common/TabTable/TabTable'
-import MainCard from '../../Components/UI/Cards/MainCard/MainCard'
-import SecondaryCard from '../../Components/UI/Cards/SecondaryCard/SecondaryCard'
-import HistoryIcon from '../../Components/UI/Icons/HistoryIcon'
-import SettingsIcon from '../../Components/UI/Icons/SettingsIcon'
-import LeftSide from '../../Components/UI/Sides/LeftSide/LeftSide'
-import RightSide from '../../Components/UI/Sides/RightSide/RightSide'
-import classes from './Lottery.module.css'
-import { makeStyles } from '@mui/styles'
-import SwapField from '../../Components/Common/SwapField/SwapField'
-import ArrowDownSwapIcon from '../../Components/UI/Icons/ArrowDownSwapIcon'
+import { useTheme } from "@emotion/react";
+import { Divider, IconButton, Tooltip, Typography } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
+import CurrentJackpot from "../../Components/Common/CurrentJackpot/CurrentJackpot";
+import TabTable from "../../Components/Common/TabTable/TabTable";
+import MainCard from "../../Components/UI/Cards/MainCard/MainCard";
+import SecondaryCard from "../../Components/UI/Cards/SecondaryCard/SecondaryCard";
+import HistoryIcon from "../../Components/UI/Icons/HistoryIcon";
+import SettingsIcon from "../../Components/UI/Icons/SettingsIcon";
+import LeftSide from "../../Components/UI/Sides/LeftSide/LeftSide";
+import RightSide from "../../Components/UI/Sides/RightSide/RightSide";
+import classes from "./Lottery.module.css";
+import { makeStyles } from "@mui/styles";
+import SwapField from "../../Components/Common/SwapField/SwapField";
+import ArrowDownSwapIcon from "../../Components/UI/Icons/ArrowDownSwapIcon";
 
-import Label from '../../Components/UI/Text/Label/Label'
-import ArrowsChangeIcon from '../../Components/UI/Icons/ArrowsChangeIcon'
-import CustomButton from '../../Components/UI/Button/CustomButton'
-import { parseMoney } from '../../Utils/parseMoney'
-import useWindowDimensions from '../../Hooks/useWindowDimension'
-import { cx } from '../../Utils/classnames'
-import CloseIcon from '../../Components/UI/Icons/CloseIcon'
-import ArrowLeftIcon from '../../Components/UI/Icons/ArrowLeftIcon'
+import Label from "../../Components/UI/Text/Label/Label";
+import ArrowsChangeIcon from "../../Components/UI/Icons/ArrowsChangeIcon";
+import CustomButton from "../../Components/UI/Button/CustomButton";
+import { parseMoney } from "../../Utils/parseMoney";
+import useWindowDimensions from "../../Hooks/useWindowDimension";
+import { cx } from "../../Utils/classnames";
+import CloseIcon from "../../Components/UI/Icons/CloseIcon";
+import ArrowLeftIcon from "../../Components/UI/Icons/ArrowLeftIcon";
+import aces_logo from "../../Assets/Icons/aces_logo.png";
+
+import {
+  getTokenBalance,
+  getQuote,
+  checkAllowance,
+  Approve,
+  swap,
+} from "../../blockchain/functions";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getLottoData } from "../../Redux/reduxActions";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        '& .MuiButtonBase-root': {
-            backgroundColor: theme.palette.primary.main
-        }
-    }
+  root: {
+    "& .MuiButtonBase-root": {
+      backgroundColor: theme.palette.primary.main,
+    },
+  },
 }));
+const tokens = [
+  {
+    value: "BNB",
+    text: "BNB",
+    address: "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+    decimals: 18,
+    img: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
+    currentValue: "0",
+    balance: "0",
+  },
+  {
+    value: "$ACES",
+    text: "METACES",
+    address: "0xd17485e114e33e581cF58975cf8cAe0909985fE7",
+    decimals: 9,
+    img: aces_logo,
+    currentValue: "0",
+    balance: "0",
+  },
+];
 
 const Lottery = (props) => {
-    const { 
-        pay,
-        receive,
-        handlePay,
-        handleReceive,
-        handleSwap,
-        exchangeRate,
-    } = props
+  //   const { pay, receive, handlePay, handleReceive, handleSwap, exchangeRate } =
+  //   props;
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  let { lotto, acesBalance, bnbBalance, userEntries } = useSelector(
+    (state) => state.common
+  );
+  let { userAddress } = useSelector((state) => state.common);
+  let { signer } = useSelector((state) => state.signer);
+  const [enoughAllowance, setEnoughAllowance] = useState(true);
+  const [tokenIn, setTokenIn] = useState(tokens[0]);
+  const [tokenOut, setTokenOut] = useState(tokens[1]);
+  const [amountIn, setAmountIn] = useState("");
+  const [amountOut, setAmountOut] = useState("");
 
-    const styles = useStyles()
+  const firstInputRef = useRef();
 
-    const values = [
-        {
-            _id: "qwe",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 1
-        },
-        {
-            _id: "qwe1",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe2",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe3",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe4",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe5",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe6",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe7",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe8",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe9",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 3
-        },
-        {
-            _id: "qwe10",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 77
-        },
-        {
-            _id: "qwe11",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe12",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe13",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
+  const theme = useTheme();
 
-        {
-            _id: "qwe14",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe15",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe16",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe17",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe18",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-        {
-            _id: "qwe19",
-            address: "0x7c1b9f46b9dgg4dfv4sfs3sfs444s4fa21",
-            entries: 17
-        },
-    ]
+  const { width } = useWindowDimensions();
 
-    const firstInputRef = useRef()
+  const [isShowSwap, setIsShowSwap] = useState(false);
 
-    const theme = useTheme()
+  const handleShowSwap = () => {
+    setIsShowSwap(!isShowSwap);
+    firstInputRef.current.focus();
+  };
 
-    const { width } = useWindowDimensions()
+  const timer = null;
 
-    const [isShowSwap, setIsShowSwap] = useState(false)
-
-    const handleShowSwap = () => {
-        setIsShowSwap(!isShowSwap)
-        firstInputRef.current.focus()
+  const changeToken = async (token, side) => {
+    switch (side) {
+      case "IN":
+        checkTokenAllowance(token);
+        setTokenIn({ ...token });
+        break;
+      case "OUT":
+        setTokenOut({ ...token });
+        break;
+      default:
+        break;
     }
+  };
 
-    const timer = null
+  const switchSides = () => {
+    changeToken(tokenOut, "IN");
+    changeToken(tokenIn, "OUT");
+  };
 
-    const handleFocus = () => {
-        firstInputRef.current.scrollIntoView({behavior: 'smooth'})
-        if(width <= 1170) {
-            timer = setTimeout(() => {
-                firstInputRef.current.focus()
-            }, 500);
-        }else {
-            firstInputRef.current.focus()
-        }
+  const checkTokenAllowance = async (token) => {
+    if (token.value === "BNB") {
+      setEnoughAllowance(true);
+    } else {
+      let allowance = await checkAllowance(userAddress, token.address);
+      console.log(allowance > 0, "allowance");
+      setEnoughAllowance(allowance > 0);
     }
+  };
 
-    useEffect(() => {
-        return () => clearTimeout(timer);
-    }, []);
+  const handleAmountChange = async (num, side) => {
+    let path = [tokenIn.address, tokenOut.address];
+    let quote;
+    switch (side) {
+      case "IN":
+        setAmountIn(num);
+        quote = await getQuote(num, path, side, tokenIn.decimals);
+        setAmountOut(
+          getNumberDecimals((quote * 10 ** 18) / 10 ** tokenOut.decimals)
+        );
+        break;
+      case "OUT":
+        setAmountOut(num);
+        quote = await getQuote(num, path, side, tokenOut.decimals);
+        setAmountIn(
+          getNumberDecimals((quote * 10 ** 18) / 10 ** tokenIn.decimals)
+        );
+        break;
+      default:
+        break;
+    }
+  };
 
-    useEffect(() => {
-        if(isShowSwap) {
-            document.body.style.overflow = 'hidden'
-        }else {
-            document.body.style.overflow = 'unset'
-        }
-    }, [isShowSwap])
+  const handleSwap = async () => {
+    setIsLoading(true);
+    let path = [tokenIn.address, tokenOut.address];
+    let decimals = [tokenIn.decimals, tokenOut.decimals];
+    let receipt = await swap(
+      amountIn,
+      amountOut,
+      path,
+      userAddress,
+      signer,
+      decimals
+    );
+    if (receipt) {
+      dispatch(getLottoData());
+      changeToken(tokenIn, "IN");
+      changeToken(tokenOut, "OUT");
+      console.log(receipt);
+    }
+    setIsLoading(false);
+  };
 
-    return(
-        <div className={classes.main}>
-            <LeftSide className={classes.left}>
-                <CurrentJackpot 
-                    cash={"38,881.34"} 
-                    actionText={"Buy Entry"}
-                    onClick={handleShowSwap}
-                />
-                <div className={classes.tickets}>
-                    <MainCard className={classes.ticket}>
-                        <p>1,567,876</p>
-                        <span>$ACES Tokens</span>
-                    </MainCard>
-                    <MainCard className={classes.ticket}>
-                        <p>$678,281</p>
-                        <span>Value</span>
-                    </MainCard>
-                    <MainCard className={classes.ticket}>
-                        <p>24</p>
-                        <span>Entries</span>
-                    </MainCard>
-                </div>
-                <div className={classes.table}>
-                    <TabTable items={values}/>
-                </div>
-            </LeftSide>
-            <RightSide className={cx(classes.right, isShowSwap ? classes.showSwap : '')}>
-                <SecondaryCard className={cx(classes.rightCard, isShowSwap ? classes.showSwapCard : '')}>
-                    <div className={classes.rightHeader}>
-                        <Typography variant='h4' color={"primary"}>Swap Tokens</Typography>
-                        <div className={classes.actions}>
-                            <IconButton 
-                                style={{
-                                    backgroundColor: theme.palette.background.buttonSecondary,
-                                    color: theme.palette.primary.main,
-                                    borderRadius: "8px"
-                                }}    
-                            >
-                                <SettingsIcon/>
-                            </IconButton>
-                            <IconButton
-                                style={{
-                                    backgroundColor: theme.palette.background.buttonSecondary,
-                                    color: theme.palette.primary.main,
-                                    borderRadius: "8px"
-                                }}  
-                            >
-                                <HistoryIcon/>
-                            </IconButton>
-                            <IconButton
-                                onClick={handleShowSwap}
-                                className={classes.showButt}
-                                style={{
-                                    backgroundColor: theme.palette.background.buttonSecondary,
-                                    color: theme.palette.primary.main,
-                                    borderRadius: "8px"
-                                }}  
-                            >
-                                {!isShowSwap && <ArrowLeftIcon/>}
-                                {isShowSwap && <CloseIcon color={theme.palette.primary.main}/>}
-                            </IconButton>
-                        </div>
-                    </div>
-                    <SwapField
-                        tokenIcon={pay.icon}
-                        tokenName={pay.name}
-                        leftLabel={"Pay"}
-                        available={parseMoney(pay.available)}
-                        valueText={"MAX"}
-                        inputRef={firstInputRef}
-                        value={pay.value}
-                        onChange={handlePay}
-                    />
-                    <div className={classes.iconContainer}>
-                        <Tooltip title="Swap">
-                            <IconButton onClick={handleSwap}>
-                                <ArrowDownSwapIcon color={theme.palette.primary.main}/>
-                            </IconButton>
-                        </Tooltip>
-                    </div>
-                    <SwapField
-                        tokenIcon={receive.icon}
-                        tokenName={receive.name}
-                        leftLabel={"Receive (Estimated)"}
-                        available={parseMoney(receive.available)}
-                        valueText={"MAX"}
-                        value={receive.value}
-                        onChange={handleReceive}
-                    />
-                    <div className={classes.swapInfo}>
-                        <Label text={`1 BNB = ${parseMoney(exchangeRate)} $ACES`}/>
-                        <ArrowsChangeIcon color={theme.palette.primary.main}/>
-                    </div>
-                    <CustomButton text="Confirm" disabled={(!pay.value || !receive.value)}/>
-                    <Label className={classes.totalLabel} text="250,000 $ACES = 1 Lotto Entry"/>
-                    <Divider style={{ 
-                        border: `1px solid ${theme.palette.background.border}`,
-                        width: "100%",
-                        marginTop: "24px"
-                    }}/>
-                    <div className={classes.willGet}>
-                        <p
-                            style={{ color: theme.palette.text.primary }}
-                        >
-                            You will get: 
-                        </p>
-                        <p style={{ color: theme.palette.text.special }}>
-                            2 Entries!
-                        </p>
-                    </div>
-                </SecondaryCard>
-            </RightSide>
+  const handleApprove = async () => {
+    setIsLoading(true);
+    let receipt = await Approve(tokenIn.address, signer);
+    if (receipt) {
+      checkTokenAllowance(tokenIn);
+      console.log(receipt);
+    }
+    setIsLoading(false);
+  };
+
+  const getNumberDecimals = (num) => {
+    let length = Math.floor(num).toString().length;
+    if (length > 4) {
+      return Number(num).toFixed(0);
+    } else {
+      return Number(num).toFixed(8);
+    }
+  };
+
+  const truncate = (value, numDecimalPlaces) =>
+    Math.trunc(value * Math.pow(10, numDecimalPlaces)) /
+    Math.pow(10, numDecimalPlaces);
+
+  useEffect(() => {
+    changeToken(tokens[0], "IN");
+    changeToken(tokens[1], "OUT");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    console.log(lotto, "lotto");
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (isShowSwap) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isShowSwap]);
+
+  return (
+    <div className={classes.main}>
+      <LeftSide className={classes.left}>
+        <CurrentJackpot
+          cash={lotto.jackpot}
+          actionText={"Buy Entry"}
+          onClick={handleShowSwap}
+        />
+        <div className={classes.tickets}>
+          <MainCard className={classes.ticket}>
+            <p>{Number(acesBalance).toFixed(0)}</p>
+            <span>$ACES Balance</span>
+          </MainCard>
+          <MainCard className={classes.ticket}>
+            <p>{lotto.entries}</p>
+            <span>Lotto Entries</span>
+          </MainCard>
+          <MainCard className={classes.ticket}>
+            <p>{userEntries}</p>
+            <span>My Entries</span>
+          </MainCard>
         </div>
-    )
-}
+        <div className={classes.table}>
+          <TabTable items={lotto.addresses} winners={lotto.results} />
+        </div>
+      </LeftSide>
 
-export default Lottery
+      <RightSide
+        className={cx(classes.right, isShowSwap ? classes.showSwap : "")}
+      >
+        <SecondaryCard
+          className={cx(
+            classes.rightCard,
+            isShowSwap ? classes.showSwapCard : ""
+          )}
+        >
+          <div className={classes.rightHeader}>
+            <Typography variant="h4" color={"primary"}>
+              Swap Tokens
+            </Typography>
+            {/* <div className={classes.actions}>
+              <IconButton
+                style={{
+                  backgroundColor: theme.palette.background.buttonSecondary,
+                  color: theme.palette.primary.main,
+                  borderRadius: "8px",
+                }}
+              >
+                <SettingsIcon />
+              </IconButton>
+              <IconButton
+                style={{
+                  backgroundColor: theme.palette.background.buttonSecondary,
+                  color: theme.palette.primary.main,
+                  borderRadius: "8px",
+                }}
+              >
+                <HistoryIcon />
+              </IconButton>
+              <IconButton
+                onClick={handleShowSwap}
+                className={classes.showButt}
+                style={{
+                  backgroundColor: theme.palette.background.buttonSecondary,
+                  color: theme.palette.primary.main,
+                  borderRadius: "8px",
+                }}
+              >
+                {!isShowSwap && <ArrowLeftIcon />}
+                {isShowSwap && <CloseIcon color={theme.palette.primary.main} />}
+              </IconButton>
+            </div> */}
+          </div>
+          <SwapField
+            tokenIcon={tokenIn.img}
+            tokenName={tokenIn.value}
+            leftLabel={"Pay"}
+            available={
+              tokenIn.value === "BNB"
+                ? truncate(bnbBalance, 4)
+                : truncate(acesBalance, 0)
+            }
+            valueText={"MAX"}
+            inputRef={firstInputRef}
+            value={amountIn}
+            onChange={(e) => handleAmountChange(e, "IN")}
+          />
+          <div className={classes.iconContainer}>
+            <Tooltip title="Swap">
+              <IconButton onClick={switchSides}>
+                <ArrowDownSwapIcon color={theme.palette.primary.main} />
+              </IconButton>
+            </Tooltip>
+          </div>
+          <SwapField
+            tokenIcon={tokenOut.img}
+            tokenName={tokenOut.value}
+            leftLabel={"Receive (Estimated)"}
+            available={
+              tokenOut.value === "BNB"
+                ? truncate(bnbBalance, 4)
+                : truncate(acesBalance, 0)
+            }
+            valueText={"MAX"}
+            value={amountOut}
+            onChange={(e) => handleAmountChange(e, "OUT")}
+          />
+          <div className={classes.swapInfo}>
+            <Label text={`1 BNB = ${parseMoney(125)} $ACES`} />
+            <ArrowsChangeIcon color={theme.palette.primary.main} />
+          </div>
+          <CustomButton
+            onClick={enoughAllowance ? handleSwap : handleApprove}
+            text={enoughAllowance ? "Swap Now" : `Approve ${tokenIn.value}`}
+            // text="Confirm"
+            disabled={isLoading}
+          />
+          <Label
+            className={classes.totalLabel}
+            text="25,000 $ACES = 1 Lotto Entry"
+          />
+          <Divider
+            style={{
+              border: `1px solid ${theme.palette.background.border}`,
+              width: "100%",
+              marginTop: "24px",
+            }}
+          />
+          <div className={classes.willGet}>
+            <p style={{ color: theme.palette.text.primary }}>You will get:</p>
+            <p style={{ color: theme.palette.text.special }}>
+              {((amountOut / 25000) % 25000).toFixed(0)} Entries!
+            </p>
+          </div>
+        </SecondaryCard>
+      </RightSide>
+    </div>
+  );
+};
+
+export default Lottery;

@@ -2,12 +2,19 @@ import { ethers, providers } from "ethers";
 import Web3 from "web3";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import store from "./reduxStore";
-import { nftABI, stakingABI, tokenABI } from "../abis/abis";
+import { nftABI, stakingABI, tokenABI, lottoABI } from "../abis/abis";
 import { useSelector } from "react-redux";
 
 const updateUser = (payload) => {
   return {
     type: "UPDATE_USER",
+    payload: payload,
+  };
+};
+
+const updateUserBalances = (payload) => {
+  return {
+    type: "UPDATE_USER_BALANCES",
     payload: payload,
   };
 };
@@ -47,6 +54,13 @@ const updateUserStaking = (payload) => {
   };
 };
 
+const updateLottoValues = (payload) => {
+  return {
+    type: "UPDATE_LOTTO_VALUES",
+    payload: payload,
+  };
+};
+
 let provider = new ethers.providers.JsonRpcProvider(
   "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
 );
@@ -56,15 +70,44 @@ let BSCprovider = new ethers.providers.JsonRpcProvider(
 
 let nftAddress = "0x061877f578C1dAe494d16782E05f908b0053C999";
 let tokenAddress = "0xd17485e114e33e581cF58975cf8cAe0909985fE7"; //token on BSC
+let lottoAddress = "0x8Fa184C4a03772Ad4347F4d773fb8EAD1762c434"; //lotto on BSC
 let stakingAddress = "0x878EF4bA030A00970cFbf5D95c1a86DA9cF159f3"; //staking on BSC
 
 let nftInstance = new ethers.Contract(nftAddress, nftABI, provider);
 let tokenInstance = new ethers.Contract(tokenAddress, tokenABI, BSCprovider);
+let lottoInstance = new ethers.Contract(lottoAddress, lottoABI, BSCprovider);
 let stakingInstance = new ethers.Contract(
   stakingAddress,
   stakingABI,
   BSCprovider
 );
+
+// BALANCES
+
+export const getUserBalances = (userAddress) => {
+  return async (dispatch) => {
+    try {
+      if (!userAddress) {
+        let reduxStore = store.getState().common;
+        userAddress = reduxStore.userAddress;
+      }
+
+      let balance = await tokenInstance.balanceOf(userAddress);
+      let bnbBalance = await BSCprovider.getBalance(userAddress);
+      let entries = await lottoInstance.userEntries(userAddress);
+
+      dispatch(
+        updateUserBalances({
+          acesBalance: ethers.utils.formatUnits(balance, 9),
+          bnbBalance: ethers.utils.formatUnits(bnbBalance, 18),
+          userEntries: Number(entries),
+        })
+      );
+    } catch (error) {
+      console.log(error, "getUserBalances");
+    }
+  };
+};
 
 // STAKING FUNCTIONS
 
@@ -256,6 +299,72 @@ export const mintNft = (amount) => {
   };
 };
 
+// LOTTO FUNCTIONS
+
+export const getLottoData = () => {
+  return async (dispatch) => {
+    try {
+      let roundNum = await lottoInstance.roundNum();
+      let results = await lottoInstance.resultLog("0", roundNum.toString());
+      let entries = await lottoInstance.roundEntries();
+      let addresses = await lottoInstance.getUniqueAddresses();
+      let jackpot = await lottoInstance.currentJackpot();
+
+      let entriesList = [];
+      addresses[0].map((el, index) => {
+        entriesList.push({
+          _id: index,
+          address: el,
+          entries: Number(addresses[1][index]),
+        });
+      });
+
+      let resultsList = [];
+      results.map((el, index) => {
+        resultsList.push({
+          _id: index,
+          winningAddress: el.winningAddress,
+          totalEntries: Number(el.totalEntries),
+          payout: ethers.utils.formatUnits(el.payout, 9),
+        });
+      });
+      console.log(resultsList, "results");
+
+      dispatch(
+        updateLottoValues({
+          roundNum: Number(roundNum),
+          results: resultsList,
+          entries: Number(entries),
+          addresses: entriesList,
+          jackpot: ethers.utils.formatUnits(jackpot, 9),
+        })
+      );
+    } catch (error) {
+      console.log(error, "getLottoData");
+    }
+  };
+};
+
+export const getUserLottoData = () => {
+  return async (dispatch) => {
+    try {
+      let minted = await nftInstance.totalSupply();
+      let baseURI = await nftInstance.baseURI();
+      let price = await nftInstance.price();
+
+      dispatch(
+        updateNftValues({
+          minted: Number(minted),
+          baseURI: baseURI,
+          price: ethers.utils.formatEther(price),
+        })
+      );
+    } catch (error) {
+      console.log(error, "getNftData");
+    }
+  };
+};
+
 // WALLET CONNECTION
 
 export const connectMetamask = () => {
@@ -281,6 +390,7 @@ export const connectMetamask = () => {
       );
       dispatch(getSigner());
       dispatch(getUserInfo(userAddress));
+      dispatch(getUserBalances(userAddress));
 
       window.ethereum.on("accountsChanged", function (accounts) {
         dispatch(
@@ -292,6 +402,7 @@ export const connectMetamask = () => {
         );
         dispatch(getSigner());
         dispatch(getUserInfo(accounts[0]));
+        dispatch(getUserBalances(accounts[0]));
       });
 
       window.ethereum.on("chainChanged", (_chainId) => {
@@ -343,6 +454,7 @@ export const connectWalletConnect = () => {
       );
 
       dispatch(getUserInfo(accounts[0]));
+      dispatch(getUserBalances(accounts[0]));
 
       provider.on("accountsChanged", (accounts) => {
         console.log(accounts);
@@ -353,6 +465,7 @@ export const connectWalletConnect = () => {
           })
         );
         dispatch(getUserInfo(accounts[0]));
+        dispatch(getUserBalances(accounts[0]));
         dispatch(getSigner("WALLET_CONNECT", provider));
       });
 

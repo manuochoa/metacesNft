@@ -26,7 +26,7 @@ const SwapField = (props) => {
   };
 
   const handleChange = (e) => {
-    onChange(e.target.value.replace(/[^0-9]/g, ""));
+    onChange(e.target.value.replace(",", "."));
   };
 
   const setMax = (value) => {

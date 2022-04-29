@@ -22,6 +22,7 @@ import {
   getNftData,
   getLevelsInfo,
   getUserInfo,
+  getLottoData,
 } from "./Redux/reduxActions";
 
 const theme = createTheme({
@@ -98,6 +99,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getNftData());
+    dispatch(getLottoData());
   }, []);
 
   return (

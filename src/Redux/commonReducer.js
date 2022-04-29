@@ -3,8 +3,17 @@ let initialState = {
   userAddress: "",
   connectionType: "",
   chainId: "",
-  acesBalance: "",
+  acesBalance: "15000",
+  bnbBalance: "0.1",
   stakingApproved: false,
+  userEntries: 0,
+  lotto: {
+    roundNum: 0,
+    results: [],
+    entries: 0,
+    addresses: [],
+    jackpot: 0,
+  },
   nft: {
     minted: "",
     baseURI: "",
@@ -61,6 +70,13 @@ let commonReducer = (state = initialState, action) => {
         userAddress: action.payload.userAddress,
         connectionType: action.payload.connectionType,
       };
+    case "UPDATE_USER_BALANCES":
+      return {
+        ...state,
+        acesBalance: action.payload.acesBalance,
+        bnbBalance: action.payload.bnbBalance,
+        userEntries: action.payload.userEntries,
+      };
     case "UPDATE_CHAIN":
       return {
         ...state,
@@ -97,6 +113,17 @@ let commonReducer = (state = initialState, action) => {
           action.payload.level1,
           action.payload.level2,
         ],
+      };
+    case "UPDATE_LOTTO_VALUES":
+      return {
+        ...state,
+        lotto: {
+          roundNum: action.payload.roundNum,
+          results: action.payload.results,
+          entries: action.payload.entries,
+          addresses: action.payload.addresses,
+          jackpot: action.payload.jackpot,
+        },
       };
     default: {
       return state;

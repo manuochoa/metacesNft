@@ -1114,7 +1114,7 @@ contract MetAces is Context, IERC20, Ownable{
          antiBotEnabled = _enable;
     }
 
-    function getLotteryEntryAmount(uint256 amount) internal view returns(uint256) {
+    function getLotteryEntryAmount(uint256 amount) public view returns(uint256) {
         if (amount == 0) {
             return 0;
         }

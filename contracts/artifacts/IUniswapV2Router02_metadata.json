@@ -978,18 +978,18 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
 		"token.sol": {
-			"keccak256": "0x6b5bebc9ef802ef240a9f3dc70f4f3da0798f1a8edc44b8473728e3879c05114",
+			"keccak256": "0xddb0160040fd420890725b9bbcea90929a68ddd339e9241b89a911052e973dbc",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5cd88e7cf858b17abc38a482d8a88be70be25105eae8b6d93b6f7df8c4ea4456",
-				"dweb:/ipfs/QmQueAjKqM9g8DMdD4oDZqhs4oRwnUX63cNkL5ypQVGztH"
+				"bzz-raw://6c09d00b24634e2484f6861922c2adb2ffc472d4317c90e3f779e7de951b43a1",
+				"dweb:/ipfs/QmdwNJRJPVj5XujX2HnSA95mYUayvu35XGy2vXAph5S6f9"
 			]
 		}
 	},
