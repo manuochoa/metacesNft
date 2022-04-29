@@ -33,7 +33,7 @@ import {
 } from "../../blockchain/functions";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getLottoData } from "../../Redux/reduxActions";
+import { getLottoData, getUserBalances } from "../../Redux/reduxActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -159,6 +159,7 @@ const Lottery = (props) => {
       decimals
     );
     if (receipt) {
+      dispatch(getUserBalances());
       dispatch(getLottoData());
       changeToken(tokenIn, "IN");
       changeToken(tokenOut, "OUT");
