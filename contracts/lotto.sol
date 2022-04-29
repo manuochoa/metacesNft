@@ -56,7 +56,7 @@ contract ACELotto is Ownable {
         for(uint256 i = 1; i <= amount; i++){
             uint256 lastIndex = entriesIndex[account][entriesIndex[account].length - 1];
             roundEntry[lastIndex] = roundEntry[roundEntries - i];
-            entriesIndex[account].pop;
+            entriesIndex[account].pop();
         }
 
         roundEntries -= amount;

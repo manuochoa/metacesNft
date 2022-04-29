@@ -70,7 +70,7 @@ let BSCprovider = new ethers.providers.JsonRpcProvider(
 
 let nftAddress = "0x061877f578C1dAe494d16782E05f908b0053C999";
 let tokenAddress = "0xd17485e114e33e581cF58975cf8cAe0909985fE7"; //token on BSC
-let lottoAddress = "0x8Fa184C4a03772Ad4347F4d773fb8EAD1762c434"; //lotto on BSC
+let lottoAddress = "0x15752C710F552a79CCdb125028874652a5EAC80a"; //lotto on BSC
 let stakingAddress = "0x878EF4bA030A00970cFbf5D95c1a86DA9cF159f3"; //staking on BSC
 
 let nftInstance = new ethers.Contract(nftAddress, nftABI, provider);

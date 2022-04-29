@@ -218,7 +218,7 @@ const Lottery = (props) => {
         />
         <div className={classes.tickets}>
           <MainCard className={classes.ticket}>
-            <p>{Number(acesBalance).toFixed(0)}</p>
+            <p>{truncate(acesBalance, 0)}</p>
             <span>$ACES Balance</span>
           </MainCard>
           <MainCard className={classes.ticket}>

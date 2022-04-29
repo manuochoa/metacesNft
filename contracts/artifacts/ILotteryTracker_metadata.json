@@ -126,11 +126,11 @@
 			]
 		},
 		"lotto.sol": {
-			"keccak256": "0x5914c75e21dfd539ce5c1b65d1e18d9601e5ad152b7aea123f550a65f47b9ee7",
+			"keccak256": "0x5a88b619937ba191d8da5cfa6eb7b48f3b7724d14fe081026b0edadb697a2330",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b26921aa06b1689cfc3411fdb8dede58e07dcef1b803b04eb79d1f44c5085c90",
-				"dweb:/ipfs/QmQTrFBCC5j35RojZuu1we4gZgAr4oF2t6A3KwUySrgKs8"
+				"bzz-raw://737effc4ab2b532ab3b11f78d83c1f727176790bd11053711717fdbef0cf5da4",
+				"dweb:/ipfs/QmZXw6BEUeX8yDucTRyEgHL4VKhoM1hPbwHVuGh1yyw6Sg"
 			]
 		}
 	},
