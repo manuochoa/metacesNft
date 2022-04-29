@@ -68,10 +68,8 @@ const Lottery = (props) => {
   //   props;
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  let { lotto, acesBalance, bnbBalance, userEntries } = useSelector(
-    (state) => state.common
-  );
-  let { userAddress } = useSelector((state) => state.common);
+  let { lotto, acesBalance, bnbBalance, userEntries, userAddress } =
+    useSelector((state) => state.common);
   let { signer } = useSelector((state) => state.signer);
   const [enoughAllowance, setEnoughAllowance] = useState(true);
   const [tokenIn, setTokenIn] = useState(tokens[0]);
@@ -159,7 +157,7 @@ const Lottery = (props) => {
       decimals
     );
     if (receipt) {
-      dispatch(getUserBalances());
+      dispatch(getUserBalances(userAddress));
       dispatch(getLottoData());
       changeToken(tokenIn, "IN");
       changeToken(tokenOut, "OUT");
@@ -341,7 +339,7 @@ const Lottery = (props) => {
           <div className={classes.willGet}>
             <p style={{ color: theme.palette.text.primary }}>You will get:</p>
             <p style={{ color: theme.palette.text.special }}>
-              {((amountOut / 25000) % 25000).toFixed(0)} Entries!
+              {truncate((amountOut / 25000) % 25000, 0)} Entries!
             </p>
           </div>
         </SecondaryCard>
