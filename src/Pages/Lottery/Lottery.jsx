@@ -248,8 +248,8 @@ const Lottery = (props) => {
             <Typography variant="h4" color={"primary"}>
               Swap Tokens
             </Typography>
-            {/* <div className={classes.actions}>
-              <IconButton
+            <div className={classes.actions}>
+              {/* <IconButton
                 style={{
                   backgroundColor: theme.palette.background.buttonSecondary,
                   color: theme.palette.primary.main,
@@ -266,7 +266,7 @@ const Lottery = (props) => {
                 }}
               >
                 <HistoryIcon />
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 onClick={handleShowSwap}
                 className={classes.showButt}
@@ -279,7 +279,7 @@ const Lottery = (props) => {
                 {!isShowSwap && <ArrowLeftIcon />}
                 {isShowSwap && <CloseIcon color={theme.palette.primary.main} />}
               </IconButton>
-            </div> */}
+            </div>
           </div>
           <SwapField
             tokenIcon={tokenIn.img}
