@@ -87,7 +87,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"lotto.sol": "ILotteryTracker"
+			"NFTlotto.sol": "ILotteryTracker"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -95,12 +95,20 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": true,
+			"enabled": false,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
+		"NFTlotto.sol": {
+			"keccak256": "0xc9b7cba054947d4e1e04d3422e9cc6006991e607dd11aa2095de2b6cd21de1b3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://762525fc4c8b9da9c78eb1b9fb0b6d62a634d38dece76b7df8aa0d9bdb23bc68",
+				"dweb:/ipfs/QmPCN9oB8i1dZEC6Tc8cxMkiyQSWYcroswfiS3rLEmFarx"
+			]
+		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol": {
 			"keccak256": "0x24e0364e503a9bbde94c715d26573a76f14cd2a202d45f96f52134ab806b67b9",
 			"license": "MIT",
@@ -117,6 +125,22 @@
 				"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
 			]
 		},
+		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721.sol": {
+			"keccak256": "0x0d4de01fe5360c38b4ad2b0822a12722958428f5138a7ff47c1720eb6fa52bba",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://77724cecdfba8814632ab58737c2b0f2d4ad2d532bc614aee559b5593c1152f0",
+				"dweb:/ipfs/QmUcE6gXyv7CQh4sUdcDABYKGTovTe1zLMZSEq95nkc3ph"
+			]
+		},
+		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/IERC721Enumerable.sol": {
+			"keccak256": "0xd1556954440b31c97a142c6ba07d5cade45f96fafd52091d33a14ebe365aecbf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://26fef835622b46a5ba08b3ef6b46a22e94b5f285d0f0fb66b703bd30217d2c34",
+				"dweb:/ipfs/QmZ548qdwfL1qF7aXz3xh1GCdTiST81kGGuKRqVUfYmPZR"
+			]
+		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Context.sol": {
 			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
 			"license": "MIT",
@@ -125,12 +149,12 @@
 				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
 			]
 		},
-		"lotto.sol": {
-			"keccak256": "0x5a88b619937ba191d8da5cfa6eb7b48f3b7724d14fe081026b0edadb697a2330",
+		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/introspection/IERC165.sol": {
+			"keccak256": "0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://737effc4ab2b532ab3b11f78d83c1f727176790bd11053711717fdbef0cf5da4",
-				"dweb:/ipfs/QmZXw6BEUeX8yDucTRyEgHL4VKhoM1hPbwHVuGh1yyw6Sg"
+				"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f",
+				"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy"
 			]
 		}
 	},

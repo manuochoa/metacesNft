@@ -7,7 +7,15 @@ let initialState = {
   bnbBalance: "0.1",
   stakingApproved: false,
   userEntries: 0,
+  nftBalance: 0,
   lotto: {
+    roundNum: 0,
+    results: [],
+    entries: 0,
+    addresses: [],
+    jackpot: 0,
+  },
+  Nftlotto: {
     roundNum: 0,
     results: [],
     entries: 0,
@@ -124,6 +132,22 @@ let commonReducer = (state = initialState, action) => {
           addresses: action.payload.addresses,
           jackpot: action.payload.jackpot,
         },
+      };
+    case "UPDATE_NFT_LOTTO_VALUES":
+      return {
+        ...state,
+        Nftlotto: {
+          roundNum: action.payload.roundNum,
+          results: action.payload.results,
+          entries: action.payload.entries,
+          addresses: action.payload.addresses,
+          jackpot: action.payload.jackpot,
+        },
+      };
+    case "UPDATE_NFT_BALANCE":
+      return {
+        ...state,
+        nftBalance: action.payload.balance,
       };
     default: {
       return state;

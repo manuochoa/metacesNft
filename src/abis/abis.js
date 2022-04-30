@@ -3196,6 +3196,347 @@ export const lottoABI = [
   },
 ];
 
+export const nftLottoABI = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_paymentToken",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_NFT",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "winner",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "LotteryWon",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "pickWinner",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_newJackpot",
+        type: "uint256",
+      },
+    ],
+    name: "updateJackpot",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_newToken",
+        type: "address",
+      },
+    ],
+    name: "updateToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "acesNFT",
+    outputs: [
+      {
+        internalType: "contract IERC721Enumerable",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "currentJackpot",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getEntries",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getUniqueAddresses",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "addresses",
+        type: "address[]",
+      },
+      {
+        internalType: "uint256[]",
+        name: "entries",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getUniqueUsers",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "counter",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "paymentToken",
+    outputs: [
+      {
+        internalType: "contract IERC20",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "startIndex",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "endIndex",
+        type: "uint256",
+      },
+    ],
+    name: "resultLog",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "totalEntries",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "winningNumber",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "payout",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "endTime",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "winningAddress",
+            type: "address",
+          },
+        ],
+        internalType: "struct ACELotto.Results[]",
+        name: "log",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "roundNum",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "roundResults",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "totalEntries",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "winningNumber",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "payout",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "endTime",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "winningAddress",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalPayout",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "userEntries",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+];
+
 export const routerABI = [
   {
     inputs: [

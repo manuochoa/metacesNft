@@ -715,27 +715,27 @@
 			]
 		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol": {
-			"keccak256": "0x9cca30a45c255977d8592f8ff1b5c373ded05ab4e4cd115a76799a25a3122e95",
+			"keccak256": "0x6bb2e941cd08fe78cd5e39c625c9bcc340e28f319ebd1a1ecc404d823c67c4df",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://da663627cd64dc6fdfe5ee3461c92b9da01101fdd9d16c861dbbde43743836c8",
-				"dweb:/ipfs/QmPMmmUqvmjNnGjuVsif7VEEPP4t8pJMimYsYhSZrt8mH4"
+				"bzz-raw://0398761e870a886e8e0fee7b80a656cea8972da389cdf9449c0a172c5050c87e",
+				"dweb:/ipfs/QmNmMx8WsLAiGQ8Kgb32sF7jgNV4RgWYQvBnskV9jmngAn"
 			]
 		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721.sol": {
-			"keccak256": "0x23c3002abdabe203c93deb5ed6b1d9a4ee4d7a0313bb98b5d38da495068e0246",
+			"keccak256": "0x0d4de01fe5360c38b4ad2b0822a12722958428f5138a7ff47c1720eb6fa52bba",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://896505990da5a9261365a29bb021deb5b609d0d0e59ca1572345dcf6238055b3",
-				"dweb:/ipfs/QmNdzEFEJWZ9yyJAJewPo7s293cHZNkN35MDMT7sH9C5ky"
+				"bzz-raw://77724cecdfba8814632ab58737c2b0f2d4ad2d532bc614aee559b5593c1152f0",
+				"dweb:/ipfs/QmUcE6gXyv7CQh4sUdcDABYKGTovTe1zLMZSEq95nkc3ph"
 			]
 		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721Receiver.sol": {
-			"keccak256": "0xb0308d8c5873c6e6c9a712669d33f77f3eb04dfbd3559ed901fa8d799673d176",
+			"keccak256": "0xa82b58eca1ee256be466e536706850163d2ec7821945abd6b4778cfb3bee37da",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0280faa8e071ed4648d8538354452be776b7e5ba5b965d4cf9b4d3f6509c920c",
-				"dweb:/ipfs/QmT9qNNpCH6NLMheAwxRHinRvuQZvLdg3TsQmCnk1aMVaq"
+				"bzz-raw://6e75cf83beb757b8855791088546b8337e9d4684e169400c20d44a515353b708",
+				"dweb:/ipfs/QmYvPafLfoquiDMEj7CKHtvbgHu7TJNPSVPSCjrtjV8HjV"
 			]
 		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/ERC721Enumerable.sol": {

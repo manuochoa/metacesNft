@@ -8,7 +8,7 @@ import RightSide from "../../Components/UI/Sides/RightSide/RightSide";
 import Label from "../../Components/UI/Text/Label/Label";
 import classes from "./NftMinting.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { mintNft } from "../../Redux/reduxActions";
+import { mintNft, getNftLottoData } from "../../Redux/reduxActions";
 
 const NftMinting = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +23,7 @@ const NftMinting = (props) => {
     let receipt = await dispatch(mintNft(limit));
     if (receipt) {
       console.log(receipt);
+      dispatch(getNftLottoData());
     }
     setIsLoading(false);
   };
