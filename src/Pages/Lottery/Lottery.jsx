@@ -68,7 +68,7 @@ const Lottery = (props) => {
   //   props;
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  let { lotto, acesBalance, bnbBalance, userEntries, userAddress } =
+  let { lotto, acesBalance, bnbBalance, userEntries, userAddress, chainId } =
     useSelector((state) => state.common);
   let { signer } = useSelector((state) => state.signer);
   const [enoughAllowance, setEnoughAllowance] = useState(true);
@@ -196,7 +196,13 @@ const Lottery = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(lotto, "lotto");
+    if (chainId !== 97) {
+      window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x61" }],
+      });
+    }
+
     return () => clearTimeout(timer);
   }, []);
 

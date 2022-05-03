@@ -137,7 +137,7 @@ const NftLottery = (props) => {
   ];
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  let { Nftlotto } = useSelector((state) => state.common);
+  let { Nftlotto, chainId } = useSelector((state) => state.common);
 
   const navigate = useNavigate();
 
@@ -152,6 +152,15 @@ const NftLottery = (props) => {
   const onClick = () => {
     navigate(`/nft_minting`);
   };
+
+  useEffect(() => {
+    if (chainId !== 4) {
+      window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x4" }],
+      });
+    }
+  }, []);
 
   return (
     <div className={classes.main}>

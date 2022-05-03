@@ -202,6 +202,19 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "_newFee",
+						"type": "uint256"
+					}
+				],
+				"name": "changeEarlyWithdrawFee",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "level",
 						"type": "uint256"
 					},
@@ -319,6 +332,23 @@
 						"internalType": "struct AcesStaking.Level",
 						"name": "level2",
 						"type": "tuple"
+					},
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "APY",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "lockPeriod",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct AcesStaking.Level",
+						"name": "level3",
+						"type": "tuple"
 					}
 				],
 				"stateMutability": "view",
@@ -431,6 +461,38 @@
 						"type": "tuple"
 					},
 					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "balance",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "claimed",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "started",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "lastClaim",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "unlockTime",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct AcesStaking.User",
+						"name": "level3",
+						"type": "tuple"
+					},
+					{
 						"internalType": "uint256",
 						"name": "level0Rewards",
 						"type": "uint256"
@@ -443,6 +505,11 @@
 					{
 						"internalType": "uint256",
 						"name": "level2Rewards",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "level3Rewards",
 						"type": "uint256"
 					}
 				],
@@ -660,11 +727,11 @@
 			]
 		},
 		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-			"keccak256": "0xbbc8ac883ac3c0078ce5ad3e288fbb3ffcc8a30c3a98c0fda0114d64fc44fca2",
+			"keccak256": "0x9750c6b834f7b43000631af5cc30001c5f547b3ceb3635488f140f60e897ea6b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://87a7a5d2f6f63f84598af02b8c50ca2df2631cb8ba2453e8d95fcb17e4be9824",
-				"dweb:/ipfs/QmR76hqtAcRqoFj33tmNjcWTLrgNsAaakYwnKZ8zoJtKei"
+				"bzz-raw://5a7d5b1ef5d8d5889ad2ed89d8619c09383b80b72ab226e0fe7bde1636481e34",
+				"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
 			]
 		},
 		"@openzeppelin/contracts/utils/Context.sol": {
@@ -676,11 +743,11 @@
 			]
 		},
 		"staking.sol": {
-			"keccak256": "0x441a170ca9c83b3ac21781304c602d810722554165cb69ef0fe5a6ee0763f385",
+			"keccak256": "0x6833d0df62118922125807b85cc9497f5eca0a0b576f976951d3a42024ce1d23",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2cf662100206338391000b8f7be41892fd655dbace431cd3f55195859a86be87",
-				"dweb:/ipfs/QmX8FbgEG5rkd34ZU75SXFVmY3wPpguRrBx7vJfXcJG5ht"
+				"bzz-raw://455b995c4d3cdecd73cabc73f094246c48db67652b7062ef6c665718d2576a0e",
+				"dweb:/ipfs/Qmbpu4eNBdya8fUcaTeKrLEm4rYfGJxUeVCc594bodniF8"
 			]
 		}
 	},

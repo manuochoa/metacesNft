@@ -72,10 +72,34 @@ contract ACELotto is Ownable {
         return currentEntries > 0;
     }
 
-    function pickWinner() external onlyOwner {
-        uint256 payout = currentJackpot();
-        require(payout >= 75000 * 10**9, "Not enough funds to draw");
-        uint256 winnerNum = random() % roundEntries;
+    // function pickWinner() external onlyOwner {
+    //     uint256 payout = currentJackpot();
+    //     require(payout >= 75000 * 10**9, "Not enough funds to draw");
+    //     uint256 winnerNum = random() % roundEntries;
+    //     address winnerAddress = roundEntry[winnerNum];
+
+    //     roundResults[roundNum] = Results ({
+    //         totalEntries: roundEntries,
+    //         winningNumber: winnerNum,
+    //         payout: payout,
+    //         endTime: block.timestamp,
+    //         winningAddress: winnerAddress 
+    //     });
+
+    //     totalPayout += payout;
+    //     roundNum++;
+
+    //     acesToken.transfer(winnerAddress, payout);
+
+    //     emit LotteryWon(winnerAddress, payout);
+    // }
+
+    function pickWinner(uint256 seed) external view returns(uint256 winnerNum, address winnerAddress) {
+        winnerNum = random(seed) % roundEntries;
+        winnerAddress = roundEntry[winnerNum];
+    }
+
+    function updateWinner(uint256 winnerNum, uint256 payout) external onlyOwner {      
         address winnerAddress = roundEntry[winnerNum];
 
         roundResults[roundNum] = Results ({
@@ -89,8 +113,6 @@ contract ACELotto is Ownable {
         totalPayout += payout;
         roundNum++;
 
-        acesToken.transfer(winnerAddress, payout);
-
         emit LotteryWon(winnerAddress, payout);
     }
 
@@ -103,6 +125,10 @@ contract ACELotto is Ownable {
     }
 
     function resultLog(uint256 startIndex, uint256 endIndex) external view returns(Results [] memory log){
+        if(roundNum == 0){
+            return log = new Results[](0);
+        }
+        
         if (endIndex >= roundNum) {
             endIndex = roundNum - 1;
         }
@@ -142,15 +168,16 @@ contract ACELotto is Ownable {
         }
     }
 
-    function random() internal view returns (uint256) {
+    function random(uint256 seed) internal view returns (uint256) {
         return
             uint256(
                 keccak256(
                     abi.encodePacked(
+                        seed,
                         block.timestamp,
                         gasleft(),
                         msg.sender,
-                        totalPayout
+                        roundEntries
                     )
                 )
             );

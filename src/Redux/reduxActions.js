@@ -88,11 +88,11 @@ let BSCprovider = new ethers.providers.JsonRpcProvider(
   "https://data-seed-prebsc-2-s2.binance.org:8545/"
 );
 
-let nftAddress = "0x061877f578C1dAe494d16782E05f908b0053C999";
+let nftAddress = "0x061877f578C1dAe494d16782E05f908b0053C999"; // NFT on RINKEBY
 let tokenAddress = "0xd17485e114e33e581cF58975cf8cAe0909985fE7"; //token on BSC
-let lottoAddress = "0x15752C710F552a79CCdb125028874652a5EAC80a"; //lotto on BSC
-let nftLottoAddress = "0x31A60ed9f567FaFBAe0d1C2c36D67fdbd7B6AF28"; //lotto on BSC
-let stakingAddress = "0x878EF4bA030A00970cFbf5D95c1a86DA9cF159f3"; //staking on BSC
+let lottoAddress = "0xE8AEda45B26D163b8401e6D020fB9a996cc2ff44"; //lotto on BSC
+let nftLottoAddress = "0x90d3D7dcF74F52E5F78521226Aa3fE31a499fC5F"; //lotto on RINKEBY
+let stakingAddress = "0xc876EA83347E77cEC6CACC284944522A96183845"; //staking on BSC
 
 let nftInstance = new ethers.Contract(nftAddress, nftABI, provider);
 let tokenInstance = new ethers.Contract(tokenAddress, tokenABI, BSCprovider);
@@ -211,6 +211,10 @@ export const getLevelsInfo = () => {
             daily_back: Number(data.level2.APY / 365) / 100,
             period: timeLeft(data.level2.lockPeriod * 1000),
           },
+          level3: {
+            daily_back: Number(data.level3.APY / 365) / 100,
+            period: timeLeft(data.level3.lockPeriod * 1000),
+          },
         })
       );
     } catch (error) {
@@ -265,6 +269,16 @@ export const getUserInfo = (userAddress) => {
             unlockTime: Number(data.level2.unlockTime * 1000),
             earnings: Number(
               ethers.utils.formatUnits(data.level2Rewards, 9)
+            ).toFixed(2),
+          },
+          level3: {
+            balance: ethers.utils.formatUnits(data.level3.balance, 9),
+            claimed: ethers.utils.formatUnits(data.level3.claimed, 9),
+            lastClaim: Number(data.level3.lastClaim * 1000),
+            started: Number(data.level3.started * 1000),
+            unlockTime: Number(data.level3.unlockTime * 1000),
+            earnings: Number(
+              ethers.utils.formatUnits(data.level3Rewards, 9)
             ).toFixed(2),
           },
         })
@@ -354,7 +368,6 @@ export const getLottoData = () => {
           payout: ethers.utils.formatUnits(el.payout, 9),
         });
       });
-      console.log(resultsList, "results");
 
       dispatch(
         updateLottoValues({
@@ -420,16 +433,6 @@ export const getNftLottoData = () => {
           payout: ethers.utils.formatUnits(el.payout, 18),
         });
       });
-      console.log(
-        {
-          roundNum: Number(roundNum),
-          results: resultsList,
-          entries: Number(entries),
-          addresses: entriesList,
-          jackpot: ethers.utils.formatUnits(jackpot, 18),
-        },
-        "results nft Lotto"
-      );
 
       dispatch(
         updateNftLottoValues({

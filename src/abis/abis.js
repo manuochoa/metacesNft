@@ -613,6 +613,19 @@ export const stakingABI = [
     inputs: [
       {
         internalType: "uint256",
+        name: "_newFee",
+        type: "uint256",
+      },
+    ],
+    name: "changeEarlyWithdrawFee",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
         name: "level",
         type: "uint256",
       },
@@ -641,6 +654,19 @@ export const stakingABI = [
       },
     ],
     name: "claim",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_level",
+        type: "uint256",
+      },
+    ],
+    name: "compound",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -680,19 +706,6 @@ export const stakingABI = [
     ],
     name: "Claim",
     type: "event",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_level",
-        type: "uint256",
-      },
-    ],
-    name: "compound",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
   },
   {
     anonymous: false,
@@ -983,6 +996,23 @@ export const stakingABI = [
         name: "level2",
         type: "tuple",
       },
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "APY",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "lockPeriod",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct AcesStaking.Level",
+        name: "level3",
+        type: "tuple",
+      },
     ],
     stateMutability: "view",
     type: "function",
@@ -1094,6 +1124,38 @@ export const stakingABI = [
         type: "tuple",
       },
       {
+        components: [
+          {
+            internalType: "uint256",
+            name: "balance",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "claimed",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "started",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "lastClaim",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "unlockTime",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct AcesStaking.User",
+        name: "level3",
+        type: "tuple",
+      },
+      {
         internalType: "uint256",
         name: "level0Rewards",
         type: "uint256",
@@ -1106,6 +1168,11 @@ export const stakingABI = [
       {
         internalType: "uint256",
         name: "level2Rewards",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "level3Rewards",
         type: "uint256",
       },
     ],
@@ -2840,82 +2907,6 @@ export const lottoABI = [
   },
   {
     inputs: [],
-    name: "pickWinner",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-    ],
-    name: "removeAccount",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "removeEntryFromWallet",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "account",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "updateAccount",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "acesToken",
     outputs: [
       {
@@ -3025,6 +3016,68 @@ export const lottoABI = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "seed",
+        type: "uint256",
+      },
+    ],
+    name: "pickWinner",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "winnerNum",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "winnerAddress",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "removeAccount",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "removeEntryFromWallet",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -3179,6 +3232,55 @@ export const lottoABI = [
     inputs: [
       {
         internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "updateAccount",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "winnerNum",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "payout",
+        type: "uint256",
+      },
+    ],
+    name: "updateWinner",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
         name: "account",
         type: "address",
       },
@@ -3250,59 +3352,6 @@ export const nftLottoABI = [
     ],
     name: "OwnershipTransferred",
     type: "event",
-  },
-  {
-    inputs: [],
-    name: "pickWinner",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "renounceOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
-      },
-    ],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_newJackpot",
-        type: "uint256",
-      },
-    ],
-    name: "updateJackpot",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_newToken",
-        type: "address",
-      },
-    ],
-    name: "updateToken",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
   },
   {
     inputs: [],
@@ -3398,6 +3447,37 @@ export const nftLottoABI = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "seed",
+        type: "uint256",
+      },
+    ],
+    name: "pickWinner",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "winnerNum",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "winnerAddress",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -3514,6 +3594,63 @@ export const nftLottoABI = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_newJackpot",
+        type: "uint256",
+      },
+    ],
+    name: "updateJackpot",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_newToken",
+        type: "address",
+      },
+    ],
+    name: "updateToken",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "winnerNum",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "payout",
+        type: "uint256",
+      },
+    ],
+    name: "updateWinner",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {

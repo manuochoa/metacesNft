@@ -9,12 +9,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "_paymentToken",
-						"type": "address"
-					},
-					{
-						"internalType": "address",
-						"name": "_NFT",
+						"name": "_aces",
 						"type": "address"
 					}
 				],
@@ -61,10 +56,10 @@
 			},
 			{
 				"inputs": [],
-				"name": "acesNFT",
+				"name": "acesToken",
 				"outputs": [
 					{
-						"internalType": "contract IERC721Enumerable",
+						"internalType": "contract IERC20",
 						"name": "",
 						"type": "address"
 					}
@@ -86,8 +81,19 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "getEntries",
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "entriesIndex",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -130,6 +136,25 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "isActiveAccount",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "owner",
 				"outputs": [
@@ -143,12 +168,23 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "paymentToken",
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "seed",
+						"type": "uint256"
+					}
+				],
+				"name": "pickWinner",
 				"outputs": [
 					{
-						"internalType": "contract IERC20",
-						"name": "",
+						"internalType": "uint256",
+						"name": "winnerNum",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "winnerAddress",
 						"type": "address"
 					}
 				],
@@ -156,8 +192,32 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "pickWinner",
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "removeAccount",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "removeEntryFromWallet",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -215,6 +275,38 @@
 						"internalType": "struct ACELotto.Results[]",
 						"name": "log",
 						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "roundEntries",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "roundEntry",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -301,12 +393,17 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
 						"internalType": "uint256",
-						"name": "_newJackpot",
+						"name": "amount",
 						"type": "uint256"
 					}
 				],
-				"name": "updateJackpot",
+				"name": "updateAccount",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -314,12 +411,17 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_newToken",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "winnerNum",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "payout",
+						"type": "uint256"
 					}
 				],
-				"name": "updateToken",
+				"name": "updateWinner",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -367,7 +469,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"NFTlotto.sol": "ACELotto"
+			"lotto.sol": "ACELotto"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -381,14 +483,6 @@
 		"remappings": []
 	},
 	"sources": {
-		"NFTlotto.sol": {
-			"keccak256": "0xc9b7cba054947d4e1e04d3422e9cc6006991e607dd11aa2095de2b6cd21de1b3",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://762525fc4c8b9da9c78eb1b9fb0b6d62a634d38dece76b7df8aa0d9bdb23bc68",
-				"dweb:/ipfs/QmPCN9oB8i1dZEC6Tc8cxMkiyQSWYcroswfiS3rLEmFarx"
-			]
-		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol": {
 			"keccak256": "0x24e0364e503a9bbde94c715d26573a76f14cd2a202d45f96f52134ab806b67b9",
 			"license": "MIT",
@@ -405,22 +499,6 @@
 				"dweb:/ipfs/QmebXWgtEfumQGBdVeM6c71McLixYXQP5Bk6kKXuoY4Bmr"
 			]
 		},
-		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721.sol": {
-			"keccak256": "0x0d4de01fe5360c38b4ad2b0822a12722958428f5138a7ff47c1720eb6fa52bba",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://77724cecdfba8814632ab58737c2b0f2d4ad2d532bc614aee559b5593c1152f0",
-				"dweb:/ipfs/QmUcE6gXyv7CQh4sUdcDABYKGTovTe1zLMZSEq95nkc3ph"
-			]
-		},
-		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/IERC721Enumerable.sol": {
-			"keccak256": "0xd1556954440b31c97a142c6ba07d5cade45f96fafd52091d33a14ebe365aecbf",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://26fef835622b46a5ba08b3ef6b46a22e94b5f285d0f0fb66b703bd30217d2c34",
-				"dweb:/ipfs/QmZ548qdwfL1qF7aXz3xh1GCdTiST81kGGuKRqVUfYmPZR"
-			]
-		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Context.sol": {
 			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
 			"license": "MIT",
@@ -429,12 +507,12 @@
 				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
 			]
 		},
-		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/introspection/IERC165.sol": {
-			"keccak256": "0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1",
+		"lotto.sol": {
+			"keccak256": "0x01abd3560141dc702b8bb619ecc39a26bd7e045d31aa67a1d7899632f6a36dbf",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f",
-				"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy"
+				"bzz-raw://a6e8d558f6f7c7a035e0da2a87c455fd04447c80bb3cfe98026d5f141f792f1b",
+				"dweb:/ipfs/QmdaZPTqNKcAqagjHDmLTqdE7RweZZvoHvaGtbeN7bhWpD"
 			]
 		}
 	},

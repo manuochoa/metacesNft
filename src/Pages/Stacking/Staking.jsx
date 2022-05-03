@@ -26,9 +26,8 @@ const Stacking = (props) => {
   const { toogleValue, setToogleValue } = props;
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  let { staking, userStaking, acesBalance, stakingApproved } = useSelector(
-    (state) => state.common
-  );
+  let { staking, userStaking, acesBalance, stakingApproved, chainId } =
+    useSelector((state) => state.common);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentPercent, setCurrentPercent] = useState(0);
   const [currentUnstakePercent, setCurrentUnstakePercent] = useState(0);
@@ -103,6 +102,15 @@ const Stacking = (props) => {
       Math.trunc(value * Math.pow(10, numDecimalPlaces)) /
       Math.pow(10, numDecimalPlaces)
     ).toString();
+
+  useEffect(() => {
+    if (chainId !== 97) {
+      window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x61" }],
+      });
+    }
+  }, []);
 
   return (
     <div className={classes.main}>
@@ -292,7 +300,12 @@ const Stacking = (props) => {
                     : "0"
                 }
                 // valueText={"MAX"}
-                onChange={handleUnstakePercent}
+                onChange={(e) => {
+                  setUnstake({
+                    ...unstake,
+                    value: e,
+                  });
+                }}
                 value={unstake.value}
               />
               <div className={classes.percentButns}>
@@ -316,6 +329,11 @@ const Stacking = (props) => {
                 disabled={!unstake.value || isLoading}
                 onClick={() => handleClick("WITHDRAW", unstake.value)}
               />
+              {userStaking[currentIndex].unlockTime > Date.now() && (
+                <div className={classes.earlyWithdraw}>
+                  <p>10% fee on early withdraw</p>
+                </div>
+              )}
             </>
           )}
         </SecondaryCard>

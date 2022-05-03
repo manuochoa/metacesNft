@@ -142,6 +142,11 @@
 .miniTableItem div:first-child {
   text-align: left;
 }
+.earlyWithdraw {
+  text-align: center;
+  margin-top: 10px;
+  color: #da3832;
+}
 
 @media screen and (max-width: 1366px) {
   .left {

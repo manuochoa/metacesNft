@@ -46,17 +46,42 @@ contract ACELotto is Ownable {
         currentJackpot = _newJackpot;
     }
 
-    function pickWinner() external onlyOwner {
-        uint256 payout = currentJackpot;
-        uint256 contractBalance = paymentToken.balanceOf(address(this));
-        require(contractBalance >= payout, "Not enough funds to draw");
+    // function pickWinner() external onlyOwner {
+    //     uint256 payout = currentJackpot;
+    //     uint256 contractBalance = paymentToken.balanceOf(address(this));
+    //     require(contractBalance >= payout, "Not enough funds to draw");
 
+    //     uint256 roundEntries = acesNFT.totalSupply();
+    //     uint256 winnerNum = (random() % roundEntries) + 1;
+    //     address winnerAddress = acesNFT.ownerOf(winnerNum);
+
+    //     roundResults[roundNum] = Results ({
+    //         totalEntries: roundEntries,
+    //         winningNumber: winnerNum,
+    //         payout: payout,
+    //         endTime: block.timestamp,
+    //         winningAddress: winnerAddress 
+    //     });
+
+    //     totalPayout += payout;
+    //     roundNum++;
+
+    //     paymentToken.transfer(winnerAddress, payout);
+
+    //     emit LotteryWon(winnerAddress, payout);
+    // }
+
+    function pickWinner(uint256 seed) external view returns(uint256 winnerNum, address winnerAddress) {
         uint256 roundEntries = acesNFT.totalSupply();
-        uint256 winnerNum = (random() % roundEntries) + 1;
+        winnerNum = (random(seed) % roundEntries) + 1;
+        winnerAddress = acesNFT.ownerOf(winnerNum);
+    }
+
+    function updateWinner(uint256 winnerNum, uint256 payout) external onlyOwner {      
         address winnerAddress = acesNFT.ownerOf(winnerNum);
 
         roundResults[roundNum] = Results ({
-            totalEntries: roundEntries,
+            totalEntries: acesNFT.totalSupply(),
             winningNumber: winnerNum,
             payout: payout,
             endTime: block.timestamp,
@@ -66,16 +91,19 @@ contract ACELotto is Ownable {
         totalPayout += payout;
         roundNum++;
 
-        paymentToken.transfer(winnerAddress, payout);
-
         emit LotteryWon(winnerAddress, payout);
     }
+
 
     function userEntries(address account) public view returns (uint256) {
         return acesNFT.balanceOf(account);
     }
 
     function resultLog(uint256 startIndex, uint256 endIndex) external view returns(Results [] memory log){
+        if(roundNum == 0){
+            return log = new Results[](0);
+        }
+        
         if (endIndex >= roundNum) {
             endIndex = roundNum - 1;
         }
@@ -121,15 +149,15 @@ contract ACELotto is Ownable {
         }
     }
 
-    function random() internal view returns (uint256) {
+    function random(uint256 seed) internal view returns (uint256) {
         return
             uint256(
                 keccak256(
                     abi.encodePacked(
+                        seed,
                         block.timestamp,
                         gasleft(),
-                        msg.sender,
-                        totalPayout
+                        msg.sender
                     )
                 )
             );

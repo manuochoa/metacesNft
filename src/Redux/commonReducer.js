@@ -40,8 +40,20 @@ let initialState = {
       daily_back: "",
       period: "",
     },
+    {
+      daily_back: "",
+      period: "",
+    },
   ],
   userStaking: [
+    {
+      balance: "",
+      claimed: "",
+      lastClaim: "",
+      started: "",
+      unlockTime: "",
+      earnings: "",
+    },
     {
       balance: "",
       claimed: "",
@@ -108,6 +120,7 @@ let commonReducer = (state = initialState, action) => {
           action.payload.level0,
           action.payload.level1,
           action.payload.level2,
+          action.payload.level3,
         ],
       };
     case "UPDATE_USER_STAKING":
@@ -120,6 +133,7 @@ let commonReducer = (state = initialState, action) => {
           action.payload.level0,
           action.payload.level1,
           action.payload.level2,
+          action.payload.level3,
         ],
       };
     case "UPDATE_LOTTO_VALUES":

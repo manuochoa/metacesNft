@@ -8,6 +8,8 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 contract AcesStaking is Ownable, Pausable {
     // Address of the token for the staking.
     IERC20 public acceptedToken;
+
+    uint256 earlyWithdrawFee = 10;
     
     // Struc with user details.
     struct User {
@@ -36,6 +38,19 @@ contract AcesStaking is Ownable, Pausable {
     // Set the token to be staked.
     constructor(address _token ) {
         acceptedToken = IERC20(_token);
+
+        // Level 0 - 1%  daily / 30 Days
+        levelInfo[0].APY = 36500;
+        levelInfo[0].lockPeriod = 30 days;
+        // Level 1 - 1.25% daily / 90 Days
+        levelInfo[1].APY = 45625;
+        levelInfo[1].lockPeriod = 90 days;
+        // Level 2 - 1.5% daily / 180 Days
+        levelInfo[2].APY = 54750;
+        levelInfo[2].lockPeriod = 180 days;
+        // Level 3 -  2% daily / 365 Days
+        levelInfo[3].APY = 73000;
+        levelInfo[3].lockPeriod = 365 days;
     }   
     
     // Pause and Unpause the contract
@@ -67,14 +82,19 @@ contract AcesStaking is Ownable, Pausable {
     function withdraw (uint256 _amount, uint256 _level) public  {
         address _msgSender = msg.sender;
         require(userLevelDeposit[_msgSender][_level].balance >= _amount, "Not enough deposit");
-        require(userLevelDeposit[_msgSender][_level].unlockTime <= block.timestamp, "Deposit not unlocked yet");
 
         uint256 rewards = calculateRewards(_msgSender, _level);
+        uint256 withdrawAmount = _amount + rewards;
+
+        uint256 withdrawFee;
+        if(userLevelDeposit[_msgSender][_level].unlockTime > block.timestamp){
+            withdrawFee = (withdrawAmount * earlyWithdrawFee) / 100;
+        }
 
         userLevelDeposit[_msgSender][_level].lastClaim = block.timestamp;        
         userLevelDeposit[_msgSender][_level].balance -= _amount;
 
-        acceptedToken.transfer(_msgSender, _amount + rewards);
+        acceptedToken.transfer(_msgSender, withdrawAmount - withdrawFee);
 
         emit Withdraw(_msgSender, 0, _amount);
     }
@@ -116,25 +136,32 @@ contract AcesStaking is Ownable, Pausable {
         return rewardsEarned;
     }    
 
-    function getUserInfo(address _user) external view returns(User memory level0,  User memory level1, User memory level2, uint256 level0Rewards, uint256 level1Rewards,  uint256 level2Rewards){
+    function getUserInfo(address _user) external view returns(User memory level0,  User memory level1, User memory level2, User memory level3, uint256 level0Rewards, uint256 level1Rewards, uint256 level2Rewards, uint256 level3Rewards){
         level0 = userLevelDeposit[_user][0];
         level1 = userLevelDeposit[_user][1];
         level2 = userLevelDeposit[_user][2];  
+        level3 = userLevelDeposit[_user][3];  
 
         level0Rewards = calculateRewards(_user, 0);
         level1Rewards = calculateRewards(_user, 1);
         level2Rewards = calculateRewards(_user, 2);
+        level3Rewards = calculateRewards(_user, 3);
     }
 
-    function getLevelsInfo() external view returns(Level memory level0, Level memory level1, Level memory level2){
+    function getLevelsInfo() external view returns(Level memory level0, Level memory level1, Level memory level2, Level memory level3){
         level0 = levelInfo[0];
         level1 = levelInfo[1];
         level2 = levelInfo[2];     
+        level3 = levelInfo[3];     
     }
 
     function changeLevelValues(uint256 level, uint256 _APY, uint256 _lockTime) external onlyOwner {
         levelInfo[level].APY = _APY;
         levelInfo[level].lockPeriod = _lockTime;
+    }
+
+    function changeEarlyWithdrawFee(uint256 _newFee) external onlyOwner {
+        earlyWithdrawFee = _newFee;
     }
 
     function withdrawTokens() external onlyOwner {

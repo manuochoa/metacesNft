@@ -14,7 +14,7 @@ const NftMinting = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const { item, limit, handleLimit, handleWallet } = props;
   const dispatch = useDispatch();
-  let { nft, userAddress } = useSelector((state) => state.common);
+  let { nft, userAddress, chainId } = useSelector((state) => state.common);
 
   const theme = useTheme();
 
@@ -27,6 +27,15 @@ const NftMinting = (props) => {
     }
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (chainId !== 4) {
+      window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x4" }],
+      });
+    }
+  }, []);
 
   return (
     <div className={classes.main}>
