@@ -18,7 +18,7 @@ import CustomButton from "../../Components/UI/Button/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { initAction } from "../../Redux/reduxActions";
 
-const stakeRows = ["Period", "Daily Back", "Earnings", "Action"];
+const stakeRows = ["Period", "Daily Back", "APY", "Earnings", "Action"];
 const percents = [25, 50, 75, 100];
 
 const Stacking = (props) => {
@@ -142,6 +142,12 @@ const Stacking = (props) => {
                   <Label text="Daily Back" />
                   <p style={{ color: theme.palette.text.primary }}>
                     {staking[currentIndex].daily_back}%
+                  </p>
+                </div>
+                <div className={classes.field}>
+                  <Label text="APY" />
+                  <p style={{ color: theme.palette.text.primary }}>
+                    {staking[currentIndex].APY}%
                   </p>
                 </div>
                 <div className={classes.field}>

@@ -30,18 +30,22 @@ let initialState = {
   staking: [
     {
       daily_back: "",
+      APY: "",
       period: "",
     },
     {
       daily_back: "",
+      APY: "",
       period: "",
     },
     {
       daily_back: "",
+      APY: "",
       period: "",
     },
     {
       daily_back: "",
+      APY: "",
       period: "",
     },
   ],

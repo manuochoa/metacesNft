@@ -137,7 +137,7 @@ const NftLottery = (props) => {
   ];
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  let { Nftlotto, chainId } = useSelector((state) => state.common);
+  let { Nftlotto, chainId, nft } = useSelector((state) => state.common);
 
   const navigate = useNavigate();
 
@@ -151,6 +151,16 @@ const NftLottery = (props) => {
 
   const onClick = () => {
     navigate(`/nft_minting`);
+  };
+
+  const NftsList = () => {
+    let items = [];
+    for (let i = 1; i <= nft.minted; i++) {
+      items.push({
+        image: `https://ipfs.io/ipfs/QmVCGNS2DnwDrrdL9MwAjDRD7JSWjJGoWJ4qG59if687Ew/${i}.jpg`,
+      });
+    }
+    return items.map((el, index) => <NftSmallItem key={index} item={el} />);
   };
 
   useEffect(() => {
@@ -182,9 +192,10 @@ const NftLottery = (props) => {
             Eligible NFT's
           </Typography>
           <div className={classes.wrapper}>
-            {nfts.map((el) => (
+            <NftsList />
+            {/* {nfts.map((el) => (
               <NftSmallItem item={el} />
-            ))}
+            ))} */}
           </div>
         </div>
         <SecondaryCard
@@ -207,9 +218,10 @@ const NftLottery = (props) => {
             </IconButton>
           </div>
           <div className={classes.wrapper}>
-            {nfts.map((el) => (
+            <NftsList />
+            {/* {nfts.map((el) => (
               <NftSmallItem item={el} />
-            ))}
+            ))} */}
           </div>
         </SecondaryCard>
       </RightSide>

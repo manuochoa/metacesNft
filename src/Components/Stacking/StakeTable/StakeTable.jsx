@@ -134,6 +134,7 @@ const StakeTable = (props) => {
             >
               <TableCell>{el.period}</TableCell>
               <TableCell>{el.daily_back}%</TableCell>
+              <TableCell>{el.APY}%</TableCell>
               <TableCell>
                 {userItems[index].earnings ? userItems[index].earnings : "-"}{" "}
                 $ACES

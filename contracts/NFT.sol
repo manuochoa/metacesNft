@@ -11,7 +11,7 @@ contract metacesNFT is ERC721Enumerable, Ownable {
     uint256 public price = 0.01 ether;
     uint256 public walletLimit = 20;
     uint256 public saleStart;
-    uint256 public MAX_SUPPLY = 5000;
+    uint256 public MAX_SUPPLY = 888;
 
     string public baseURI;
 
@@ -85,10 +85,7 @@ contract metacesNFT is ERC721Enumerable, Ownable {
         return baseURI;
     }
 
-    function changeStartTime(uint256 _SaleTime)
-        public
-        onlyOwner
-    {
+    function changeStartTime(uint256 _SaleTime) public onlyOwner {
         saleStart = _SaleTime;
     }
 }

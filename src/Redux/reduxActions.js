@@ -201,18 +201,22 @@ export const getLevelsInfo = () => {
         updateStakingValues({
           level0: {
             daily_back: Number(data.level0.APY / 365) / 100,
+            APY: Number(data.level0.APY) / 100,
             period: timeLeft(data.level0.lockPeriod * 1000),
           },
           level1: {
             daily_back: Number(data.level1.APY / 365) / 100,
+            APY: Number(data.level1.APY) / 100,
             period: timeLeft(data.level1.lockPeriod * 1000),
           },
           level2: {
             daily_back: Number(data.level2.APY / 365) / 100,
+            APY: Number(data.level2.APY) / 100,
             period: timeLeft(data.level2.lockPeriod * 1000),
           },
           level3: {
             daily_back: Number(data.level3.APY / 365) / 100,
+            APY: Number(data.level3.APY) / 100,
             period: timeLeft(data.level3.lockPeriod * 1000),
           },
         })
