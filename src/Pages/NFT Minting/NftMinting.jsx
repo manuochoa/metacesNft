@@ -29,10 +29,10 @@ const NftMinting = (props) => {
   };
 
   useEffect(() => {
-    if (chainId !== 4) {
+    if (chainId !== 1) {
       window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x4" }],
+        params: [{ chainId: "0x1" }],
       });
     }
   }, []);

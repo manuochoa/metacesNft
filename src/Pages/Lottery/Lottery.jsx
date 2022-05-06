@@ -46,7 +46,7 @@ const tokens = [
   {
     value: "BNB",
     text: "BNB",
-    address: "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+    address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     decimals: 18,
     img: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
     currentValue: "0",
@@ -55,7 +55,7 @@ const tokens = [
   {
     value: "$ACES",
     text: "METACES",
-    address: "0xd17485e114e33e581cF58975cf8cAe0909985fE7",
+    address: "0x1702e76a5be119E332805dC7C11Be26f3857c31d",
     decimals: 9,
     img: aces_logo,
     currentValue: "0",
@@ -196,10 +196,10 @@ const Lottery = (props) => {
   }, []);
 
   useEffect(() => {
-    if (chainId !== 97) {
+    if (chainId !== 56) {
       window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x61" }],
+        params: [{ chainId: "0x38" }],
       });
     }
 

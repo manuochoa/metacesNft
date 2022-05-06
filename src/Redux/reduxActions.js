@@ -82,17 +82,17 @@ const updateUserNftBalance = (payload) => {
 };
 
 let provider = new ethers.providers.JsonRpcProvider(
-  "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+  "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
 );
 let BSCprovider = new ethers.providers.JsonRpcProvider(
-  "https://data-seed-prebsc-2-s2.binance.org:8545/"
+  "https://bsc-dataseed1.ninicoin.io/"
 );
 
 let nftAddress = "0x061877f578C1dAe494d16782E05f908b0053C999"; // NFT on RINKEBY
-let tokenAddress = "0xd17485e114e33e581cF58975cf8cAe0909985fE7"; //token on BSC
-let lottoAddress = "0xE8AEda45B26D163b8401e6D020fB9a996cc2ff44"; //lotto on BSC
+let tokenAddress = "0x1702e76a5be119E332805dC7C11Be26f3857c31d"; //token on BSC MAINNET
+let lottoAddress = "0x93f9073619707b068DBD436B31907159f3Fe4bEa"; //lotto on BSC MAINNET
 let nftLottoAddress = "0x90d3D7dcF74F52E5F78521226Aa3fE31a499fC5F"; //lotto on RINKEBY
-let stakingAddress = "0xc876EA83347E77cEC6CACC284944522A96183845"; //staking on BSC
+let stakingAddress = "0xaebDD6cBd68c150d111d1Ebd4a58C6bD4Cc4671A"; //staking on BSC MAINNET
 
 let nftInstance = new ethers.Contract(nftAddress, nftABI, provider);
 let tokenInstance = new ethers.Contract(tokenAddress, tokenABI, BSCprovider);
@@ -539,12 +539,13 @@ export const connectWalletConnect = () => {
       console.log("hola");
       const provider = new WalletConnectProvider({
         rpc: {
-          // 56: "https://bsc-dataseed.binance.org/",
+          1: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+          56: "https://bsc-dataseed1.ninicoin.io/",
           4: "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
           97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
         },
         // network: "binance",
-        chainId: 4,
+        chainId: 56,
         infuraId: null,
       });
 
@@ -616,9 +617,9 @@ export const disconnectWallet = () => {
       if (connectionType === "WALLET_CONNECT") {
         const provider = new WalletConnectProvider({
           rpc: {
-            // 56: "https://bsc-dataseed1.ninicoin.io/",
+            1: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+            56: "https://bsc-dataseed1.ninicoin.io/",
             4: "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-
             97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
           },
           chainId: 4,

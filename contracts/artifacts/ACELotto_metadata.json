@@ -477,7 +477,7 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
@@ -508,11 +508,11 @@
 			]
 		},
 		"lotto.sol": {
-			"keccak256": "0x01abd3560141dc702b8bb619ecc39a26bd7e045d31aa67a1d7899632f6a36dbf",
+			"keccak256": "0x06ef3ffddaaf489955c6169663d0b62099638d30463911449c61c2211d2ff646",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a6e8d558f6f7c7a035e0da2a87c455fd04447c80bb3cfe98026d5f141f792f1b",
-				"dweb:/ipfs/QmdaZPTqNKcAqagjHDmLTqdE7RweZZvoHvaGtbeN7bhWpD"
+				"bzz-raw://142135148984ec8de90977fa424d89de210e1ffec0b6ea752e77481ecf7f1af9",
+				"dweb:/ipfs/QmRX2rz94G5RLHKc1itQqVnVy8bkEbq6tzeqN2aeeuBeAj"
 			]
 		}
 	},

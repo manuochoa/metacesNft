@@ -2,14 +2,15 @@ import { ethers } from "ethers";
 import { tokenABI, routerABI } from "../abis/abis";
 
 let provider = new ethers.providers.JsonRpcProvider(
-  "https://data-seed-prebsc-2-s2.binance.org:8545/"
+  // "https://data-seed-prebsc-2-s2.binance.org:8545/"
+  "https://bsc-dataseed1.ninicoin.io/"
 );
 
 // let tokenAddress = "0xBa847d96e2d702A9DCc016Dd524E74170B229b1A";
-let routerAddress = "0x56314e2Ed3caB059639522fC7e76a71231b4d42d";
-// let routerAddress = "0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3"; // MAINNET
-let BNB = "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd";
-// let BNB = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c" // MAINNET
+// let routerAddress = "0x56314e2Ed3caB059639522fC7e76a71231b4d42d";
+let routerAddress = "0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3"; // MAINNET
+// let BNB = "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd";
+let BNB = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"; // MAINNET
 
 let routerInterface = new ethers.Contract(routerAddress, routerABI, provider);
 

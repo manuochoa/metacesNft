@@ -72,28 +72,6 @@ contract ACELotto is Ownable {
         return currentEntries > 0;
     }
 
-    // function pickWinner() external onlyOwner {
-    //     uint256 payout = currentJackpot();
-    //     require(payout >= 75000 * 10**9, "Not enough funds to draw");
-    //     uint256 winnerNum = random() % roundEntries;
-    //     address winnerAddress = roundEntry[winnerNum];
-
-    //     roundResults[roundNum] = Results ({
-    //         totalEntries: roundEntries,
-    //         winningNumber: winnerNum,
-    //         payout: payout,
-    //         endTime: block.timestamp,
-    //         winningAddress: winnerAddress 
-    //     });
-
-    //     totalPayout += payout;
-    //     roundNum++;
-
-    //     acesToken.transfer(winnerAddress, payout);
-
-    //     emit LotteryWon(winnerAddress, payout);
-    // }
-
     function pickWinner(uint256 seed) external view returns(uint256 winnerNum, address winnerAddress) {
         winnerNum = random(seed) % roundEntries;
         winnerAddress = roundEntry[winnerNum];

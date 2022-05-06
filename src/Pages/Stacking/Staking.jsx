@@ -104,10 +104,10 @@ const Stacking = (props) => {
     ).toString();
 
   useEffect(() => {
-    if (chainId !== 97) {
+    if (chainId !== 56) {
       window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x61" }],
+        params: [{ chainId: "0x38" }],
       });
     }
   }, []);
