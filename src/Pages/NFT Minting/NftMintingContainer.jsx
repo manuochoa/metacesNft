@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NftMinting from "./NftMinting";
-import nft1 from "../../Assets/nftBig.png";
+import nft1 from "../../Assets/0101.gif";
 
 const NftMintingContainer = ({ handleWallet }) => {
   const [currentNft, setCurrentNft] = useState({
