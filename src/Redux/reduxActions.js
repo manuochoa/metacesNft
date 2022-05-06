@@ -82,7 +82,8 @@ const updateUserNftBalance = (payload) => {
 };
 
 let provider = new ethers.providers.JsonRpcProvider(
-  "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+  // "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+  "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
 );
 let BSCprovider = new ethers.providers.JsonRpcProvider(
   "https://bsc-dataseed1.ninicoin.io/"
