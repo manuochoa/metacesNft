@@ -8,7 +8,7 @@ let provider = new ethers.providers.JsonRpcProvider(
 
 // let tokenAddress = "0xBa847d96e2d702A9DCc016Dd524E74170B229b1A";
 // let routerAddress = "0x56314e2Ed3caB059639522fC7e76a71231b4d42d";
-let routerAddress = "0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3"; // MAINNET
+let routerAddress = "0x10ED43C718714eb63d5aA57B78B54704E256024E"; // MAINNET
 // let BNB = "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd";
 let BNB = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"; // MAINNET
 

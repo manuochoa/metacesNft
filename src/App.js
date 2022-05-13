@@ -21,7 +21,7 @@ import {
   disconnectWallet,
   getNftData,
   getLevelsInfo,
-  getUserInfo,
+  getAcesPrice,
   getLottoData,
   getNftLottoData,
 } from "./Redux/reduxActions";
@@ -55,7 +55,7 @@ const theme = createTheme({
 const App = () => {
   const [isShowConnectWallet, setIsShowConnectWallet] = useState(false);
   const dispatch = useDispatch();
-  let { userAddress, connectionType, chainId } = useSelector(
+  let { userAddress, connectionType, chainId, acesPrice } = useSelector(
     (state) => state.common
   );
 
@@ -81,6 +81,7 @@ const App = () => {
           break;
       }
     }
+    dispatch(getAcesPrice());
     dispatch(getLevelsInfo());
   }, []);
 
@@ -113,6 +114,7 @@ const App = () => {
             style={{ backgroundColor: theme.palette.background.main }}
           >
             <Navbar
+              acesPrice={acesPrice}
               chainId={chainId}
               userAddress={userAddress}
               handleWallet={handleShowWallet}

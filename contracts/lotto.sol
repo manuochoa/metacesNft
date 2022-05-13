@@ -16,7 +16,10 @@ contract ACELotto is Ownable {
     uint256 public roundNum;
     uint256 public totalPayout;
     
-    IERC20 public acesToken;
+    IERC20 public BUSD = IERC20(0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56);
+
+    address public acesToken = 0x1702e76a5be119E332805dC7C11Be26f3857c31d;
+    address public treasuryWallet = 0x0eD2Fd07B8BE10E2b8737e39AD33663DC711C31B;
     
     struct Results {
         uint256 totalEntries;
@@ -32,11 +35,14 @@ contract ACELotto is Ownable {
 
     event LotteryWon(address winner, uint256 amount);
 
-    constructor(address _aces){
-        acesToken = IERC20(_aces);
+    constructor(){}
+
+    modifier restricted() {
+        require(owner() == _msgSender() || acesToken == _msgSender(), "Not allowed");
+        _;
     }
 
-    function updateAccount(address account, uint256 amount) external{
+    function updateAccount(address account, uint256 amount) public restricted{
         for(uint256 i; i < amount; i++){
             roundEntry[roundEntries + i] = account;
             entriesIndex[account].push(roundEntries + i);
@@ -45,7 +51,15 @@ contract ACELotto is Ownable {
         roundEntries += amount;
     }
 
-    function removeEntryFromWallet(address account, uint256 amount) public {
+    function batchAdd(address [] memory accounts, uint256 [] memory amounts) external restricted{
+        require(accounts.length == amounts.length, "Arrays don't have same lenght");
+
+        for (uint256 i = 0; i < accounts.length; i++) {
+            updateAccount(accounts[i],amounts[i]);
+        }   
+    }
+
+    function removeEntryFromWallet(address account, uint256 amount) public restricted {
         uint256 currentEntries = userEntries(account);
         if(currentEntries == 0){
             return;
@@ -62,7 +76,7 @@ contract ACELotto is Ownable {
         roundEntries -= amount;
     }
 
-    function removeAccount(address account) external{
+    function removeAccount(address account) external restricted{
         uint256 currentEntries = userEntries(account);
         removeEntryFromWallet(account, currentEntries);
     }
@@ -95,7 +109,7 @@ contract ACELotto is Ownable {
     }
 
     function currentJackpot() public view returns (uint256) {
-        return acesToken.balanceOf(address(this));
+        return BUSD.balanceOf(treasuryWallet);
     }
 
     function userEntries(address account) public view returns (uint256) {

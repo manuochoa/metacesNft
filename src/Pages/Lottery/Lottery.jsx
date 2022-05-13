@@ -33,7 +33,11 @@ import {
 } from "../../blockchain/functions";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getLottoData, getUserBalances } from "../../Redux/reduxActions";
+import {
+  getLottoData,
+  getUserBalances,
+  pickWinner,
+} from "../../Redux/reduxActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,6 +67,10 @@ const tokens = [
   },
 ];
 
+let owner = "0xf97ceD46126B30fe7d8Dfe1b185f80f7D4956109";
+let admin1 = "";
+let admin2 = "0x153B202F6C6e570f13C27371CdA6Ae2c8768Dca6";
+
 const Lottery = (props) => {
   //   const { pay, receive, handlePay, handleReceive, handleSwap, exchangeRate } =
   //   props;
@@ -76,6 +84,8 @@ const Lottery = (props) => {
   const [tokenOut, setTokenOut] = useState(tokens[1]);
   const [amountIn, setAmountIn] = useState("");
   const [amountOut, setAmountOut] = useState("");
+  const [winner, setWinner] = useState("");
+  const [pickingWinner, setPickingWinner] = useState(false);
 
   const firstInputRef = useRef();
 
@@ -185,6 +195,15 @@ const Lottery = (props) => {
     }
   };
 
+  const handleWinner = async () => {
+    setPickingWinner(true);
+
+    let winnerAddress = await pickWinner();
+    setWinner(winnerAddress);
+
+    setPickingWinner(false);
+  };
+
   const truncate = (value, numDecimalPlaces) =>
     Math.trunc(value * Math.pow(10, numDecimalPlaces)) /
     Math.pow(10, numDecimalPlaces);
@@ -218,7 +237,7 @@ const Lottery = (props) => {
     <div className={classes.main}>
       <LeftSide className={classes.left}>
         <CurrentJackpot
-          cash={lotto.jackpot}
+          cash={truncate(lotto.jackpot, 2)}
           actionText={"Buy Entry"}
           onClick={handleShowSwap}
         />
@@ -238,6 +257,11 @@ const Lottery = (props) => {
         </div>
         <div className={classes.table}>
           <TabTable items={lotto.addresses} winners={lotto.results} />
+        </div>
+        <div className={classes.table}>
+          <SecondaryCard
+            className={cx(classes.rightCard, classes.showSwapCard)}
+          ></SecondaryCard>
         </div>
       </LeftSide>
 
@@ -348,6 +372,35 @@ const Lottery = (props) => {
               {truncate((amountOut / 25000) % 25000, 0)} Entries!
             </p>
           </div>
+          <Divider
+            style={{
+              border: `1px solid ${theme.palette.background.border}`,
+              width: "100%",
+              marginTop: "24px",
+            }}
+          />
+          {userAddress === owner.toLowerCase() ||
+          userAddress === admin1.toLowerCase() ||
+          userAddress === admin2.toLowerCase() ? (
+            <div className={classes.pickSection}>
+              <h2>Winner Selection</h2>
+              <h3>
+                {pickingWinner
+                  ? "Choosing a winner..."
+                  : winner === ""
+                  ? "Pick Winner"
+                  : winner}
+              </h3>
+              <CustomButton
+                onClick={handleWinner}
+                text={"Pick"}
+                // text="Confirm"
+                disabled={isLoading}
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </SecondaryCard>
       </RightSide>
     </div>

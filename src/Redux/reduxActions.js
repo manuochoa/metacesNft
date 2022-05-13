@@ -8,12 +8,21 @@ import {
   tokenABI,
   lottoABI,
   nftLottoABI,
+  lottoTracker,
 } from "../abis/abis";
+import { getQuote } from "../blockchain/functions";
 import { useSelector } from "react-redux";
 
 const updateUser = (payload) => {
   return {
     type: "UPDATE_USER",
+    payload: payload,
+  };
+};
+
+const updatePrice = (payload) => {
+  return {
+    type: "UPDATE_PRICE",
     payload: payload,
   };
 };
@@ -89,9 +98,13 @@ let BSCprovider = new ethers.providers.JsonRpcProvider(
   "https://bsc-dataseed1.ninicoin.io/"
 );
 
+let BscTestnetProvider = new ethers.providers.JsonRpcProvider(
+  "https://bsc-dataseed1.ninicoin.io/"
+);
+
 let nftAddress = "0x061877f578C1dAe494d16782E05f908b0053C999"; // NFT on RINKEBY
 let tokenAddress = "0x1702e76a5be119E332805dC7C11Be26f3857c31d"; //token on BSC MAINNET
-let lottoAddress = "0x93f9073619707b068DBD436B31907159f3Fe4bEa"; //lotto on BSC MAINNET
+let lottoAddress = "0x5B41039bB5183C59c35e050b4e909811B805A351"; //lotto on BSC MAINNET
 let nftLottoAddress = "0x90d3D7dcF74F52E5F78521226Aa3fE31a499fC5F"; //lotto on RINKEBY
 let stakingAddress = "0xaebDD6cBd68c150d111d1Ebd4a58C6bD4Cc4671A"; //staking on BSC MAINNET
 
@@ -108,8 +121,35 @@ let stakingInstance = new ethers.Contract(
   stakingABI,
   BSCprovider
 );
+let newLottoInstance = new ethers.Contract(
+  "0x4145E916C5bcD7fb12B79863E1B79F9C5db173e6",
+  lottoTracker,
+  BSCprovider
+);
 
 // BALANCES
+export const getAcesPrice = () => {
+  return async (dispatch) => {
+    try {
+      let path = [
+        "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+        "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+        "0x1702e76a5be119E332805dC7C11Be26f3857c31d",
+      ];
+
+      let result = await getQuote("1", path, "OUT", 9);
+      console.log(Number(result).toFixed(8), "price");
+
+      dispatch(
+        updatePrice({
+          price: Number(result).toFixed(8),
+        })
+      );
+    } catch (error) {
+      console.log(error, "getAcesPrice");
+    }
+  };
+};
 
 export const getUserBalances = (userAddress) => {
   return async (dispatch) => {
@@ -121,7 +161,7 @@ export const getUserBalances = (userAddress) => {
 
       let balance = await tokenInstance.balanceOf(userAddress);
       let bnbBalance = await BSCprovider.getBalance(userAddress);
-      let entries = await lottoInstance.userEntries(userAddress);
+      let entries = await newLottoInstance.getEntryCountForAccount(userAddress);
 
       dispatch(
         updateUserBalances({
@@ -350,17 +390,20 @@ export const getLottoData = () => {
   return async (dispatch) => {
     try {
       let roundNum = await lottoInstance.roundNum();
-      let results = await lottoInstance.resultLog("0", roundNum.toString());
-      let entries = await lottoInstance.roundEntries();
-      let addresses = await lottoInstance.getUniqueAddresses();
+      let results = await newLottoInstance.getLastWinners("10000");
+      let entries = await newLottoInstance.getActiveParticipantsCount();
+      let addresses = await newLottoInstance.getActiveParticipantAddresses();
+      let addressesEntries =
+        await newLottoInstance.getActiveParticipantEntries();
       let jackpot = await lottoInstance.currentJackpot();
 
+      console.log(results, "results");
       let entriesList = [];
-      addresses[0].map((el, index) => {
+      addresses.map((el, index) => {
         entriesList.push({
           _id: index,
           address: el,
-          entries: Number(addresses[1][index]),
+          entries: Number(addressesEntries[index]),
         });
       });
 
@@ -368,9 +411,9 @@ export const getLottoData = () => {
       results.map((el, index) => {
         resultsList.push({
           _id: index,
-          winningAddress: el.winningAddress,
-          totalEntries: Number(el.totalEntries),
-          payout: ethers.utils.formatUnits(el.payout, 9),
+          winningAddress: el.winner,
+          // totalEntries: Number(el.totalEntries),
+          payout: ethers.utils.formatUnits(el.amount, 9),
         });
       });
 
@@ -380,7 +423,7 @@ export const getLottoData = () => {
           results: resultsList,
           entries: Number(entries),
           addresses: entriesList,
-          jackpot: ethers.utils.formatUnits(jackpot, 9),
+          jackpot: ethers.utils.formatUnits(jackpot, 18),
         })
       );
     } catch (error) {
@@ -407,6 +450,40 @@ export const getUserLottoData = () => {
       console.log(error, "getNftData");
     }
   };
+};
+
+export const pickWinner = async () => {
+  try {
+    let address = await newLottoInstance.getActiveParticipantAddresses();
+    let entries = await newLottoInstance.getActiveParticipantEntries();
+    let participants = await newLottoInstance.getActiveParticipantsCount();
+
+    let finalList = [];
+
+    address.map((el, index) => {
+      for (let i = 0; i < Number(entries[index]); i++) {
+        finalList.push(el);
+      }
+    });
+
+    shuffleArray(finalList);
+
+    let random = getRandomInt(finalList.length);
+
+    console.log(random, finalList[random], "winner");
+
+    return finalList[random];
+  } catch (error) {
+    console.log(error, "pickWinner");
+  }
+};
+
+const shuffleArray = (array) => {
+  array.sort(() => Math.random() - 0.5);
+};
+
+const getRandomInt = (max) => {
+  return Math.floor(Math.random() * max);
 };
 
 // LOTTO FUNCTIONS

@@ -9,7 +9,7 @@ import Burger from "./Burger/Burger";
 import { useTheme } from "@emotion/react";
 
 const Navbar = (props) => {
-  const { handleWallet, userAddress, chainId } = props;
+  const { handleWallet, userAddress, chainId, acesPrice } = props;
 
   const theme = useTheme();
 
@@ -58,7 +58,7 @@ const Navbar = (props) => {
         </IconButton>
         <div className={classes.curs}>
           <p>1 $ACES = </p>
-          <p>&nbsp;$1.34</p>
+          <p>&nbsp;${acesPrice}</p>
         </div>
         <div className={classes.walletButContainer}>
           <div className={classes.bsc}>

@@ -60,6 +60,7 @@ const TabTable = (props) => {
   const { items, winners } = props;
 
   const [tabIndex, setTabIndex] = useState(0);
+  const [seeMore, setSeeMore] = useState(10);
 
   const materialTab = tabStyles();
   const materialPagination = paginationStyles();
@@ -95,9 +96,6 @@ const TabTable = (props) => {
       value: "Winner",
     },
     {
-      value: "Total Entries",
-    },
-    {
       value: "Payout",
     },
   ];
@@ -115,7 +113,7 @@ const TabTable = (props) => {
           <>
             <div className={classes.tables}>
               <div className={classes.table}>
-                <TableComponent items={items.slice(0, 10)} rows={rows} />
+                <TableComponent items={items.slice(0, seeMore)} rows={rows} />
               </div>
               {/* <div className={classes.secondTable}>
                 <TableComponent
@@ -125,16 +123,22 @@ const TabTable = (props) => {
                 />
               </div> */}
             </div>
-            {/* <div className={classes.pagination}>
-              <Pagination
+            <h4
+              className={classes.seeMore}
+              onClick={() => setSeeMore(seeMore + 5)}
+            >
+              see more...
+            </h4>
+            <div className={classes.pagination}>
+              {/* <Pagination
                 page={1}
                 count={10}
                 classes={materialPagination}
                 size={"small"}
                 boundaryCount={1}
                 siblingCount={0}
-              />
-            </div> */}
+              /> */}
+            </div>
           </>
         )}
         {tabIndex === 1 && (

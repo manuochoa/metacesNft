@@ -3,6 +3,7 @@ let initialState = {
   userAddress: "",
   connectionType: "",
   chainId: "",
+  acesPrice: "",
   acesBalance: "15000",
   bnbBalance: "0.1",
   stakingApproved: false,
@@ -93,6 +94,11 @@ let commonReducer = (state = initialState, action) => {
         loading: false,
         userAddress: action.payload.userAddress,
         connectionType: action.payload.connectionType,
+      };
+    case "UPDATE_PRICE":
+      return {
+        ...state,
+        acesPrice: action.payload.price,
       };
     case "UPDATE_USER_BALANCES":
       return {
