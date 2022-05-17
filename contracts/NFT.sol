@@ -8,7 +8,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
 contract metacesNFT is ERC721Enumerable, Ownable {
     using Strings for uint256;
 
-    uint256 public price = 0.01 ether;
+    uint256 public price = 0.1 ether;
     uint256 public walletLimit = 20;
     uint256 public saleStart;
     uint256 public MAX_SUPPLY = 888;

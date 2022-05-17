@@ -18,7 +18,6 @@ contract ACELotto is Ownable {
     uint256 public totalPayout;
     uint256 public currentJackpot = 1 ether;
     
-    IERC20 public paymentToken;
     IERC721Enumerable public acesNFT;
     
     struct Results {
@@ -33,43 +32,13 @@ contract ACELotto is Ownable {
 
     event LotteryWon(address winner, uint256 amount);
 
-    constructor(address _paymentToken, address _NFT){
-        paymentToken = IERC20(_paymentToken);
+    constructor(address _NFT){
         acesNFT = IERC721Enumerable(_NFT);
-    }
-
-    function updateToken(address _newToken) external onlyOwner {
-        paymentToken = IERC20(_newToken);
     }
 
     function updateJackpot(uint256 _newJackpot) external onlyOwner {
         currentJackpot = _newJackpot;
     }
-
-    // function pickWinner() external onlyOwner {
-    //     uint256 payout = currentJackpot;
-    //     uint256 contractBalance = paymentToken.balanceOf(address(this));
-    //     require(contractBalance >= payout, "Not enough funds to draw");
-
-    //     uint256 roundEntries = acesNFT.totalSupply();
-    //     uint256 winnerNum = (random() % roundEntries) + 1;
-    //     address winnerAddress = acesNFT.ownerOf(winnerNum);
-
-    //     roundResults[roundNum] = Results ({
-    //         totalEntries: roundEntries,
-    //         winningNumber: winnerNum,
-    //         payout: payout,
-    //         endTime: block.timestamp,
-    //         winningAddress: winnerAddress 
-    //     });
-
-    //     totalPayout += payout;
-    //     roundNum++;
-
-    //     paymentToken.transfer(winnerAddress, payout);
-
-    //     emit LotteryWon(winnerAddress, payout);
-    // }
 
     function pickWinner(uint256 seed) external view returns(uint256 winnerNum, address winnerAddress) {
         uint256 roundEntries = acesNFT.totalSupply();

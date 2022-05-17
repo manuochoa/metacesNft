@@ -11,6 +11,7 @@ import {
   lottoTracker,
 } from "../abis/abis";
 import { getQuote } from "../blockchain/functions";
+import { images } from "../Assets/reduced";
 import { useSelector } from "react-redux";
 
 const updateUser = (payload) => {
@@ -91,8 +92,8 @@ const updateUserNftBalance = (payload) => {
 };
 
 let provider = new ethers.providers.JsonRpcProvider(
-  // "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
-  "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+  "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+  // "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
 );
 let BSCprovider = new ethers.providers.JsonRpcProvider(
   "https://bsc-dataseed1.ninicoin.io/"
@@ -102,10 +103,10 @@ let BscTestnetProvider = new ethers.providers.JsonRpcProvider(
   "https://bsc-dataseed1.ninicoin.io/"
 );
 
-let nftAddress = "0x061877f578C1dAe494d16782E05f908b0053C999"; // NFT on RINKEBY
+let nftAddress = "0xcE873C9689334B9D77DDec3EdBAFCa8C81a02acB"; // NFT on MAINNET
 let tokenAddress = "0x1702e76a5be119E332805dC7C11Be26f3857c31d"; //token on BSC MAINNET
 let lottoAddress = "0x5B41039bB5183C59c35e050b4e909811B805A351"; //lotto on BSC MAINNET
-let nftLottoAddress = "0x90d3D7dcF74F52E5F78521226Aa3fE31a499fC5F"; //lotto on RINKEBY
+let nftLottoAddress = "0xB9F28B2C4C32C2e38a5F8559Abd4920D8D9Bf3C4"; //lotto on MAINNET
 let stakingAddress = "0xaebDD6cBd68c150d111d1Ebd4a58C6bD4Cc4671A"; //staking on BSC MAINNET
 
 let nftInstance = new ethers.Contract(nftAddress, nftABI, provider);
@@ -162,12 +163,15 @@ export const getUserBalances = (userAddress) => {
       let balance = await tokenInstance.balanceOf(userAddress);
       let bnbBalance = await BSCprovider.getBalance(userAddress);
       let entries = await newLottoInstance.getEntryCountForAccount(userAddress);
+      let userIds = await nftInstance.walletOfOwner(userAddress);
+      let userNfts = userIds.map((el) => images[Number(el)]);
 
       dispatch(
         updateUserBalances({
           acesBalance: ethers.utils.formatUnits(balance, 9),
           bnbBalance: ethers.utils.formatUnits(bnbBalance, 18),
           userEntries: Number(entries),
+          userNfts,
         })
       );
     } catch (error) {

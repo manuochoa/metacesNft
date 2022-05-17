@@ -5,6 +5,7 @@ import TabTable from "../../Components/Common/TabTable/TabTable";
 import LeftSide from "../../Components/UI/Sides/LeftSide/LeftSide";
 import RightSide from "../../Components/UI/Sides/RightSide/RightSide";
 import classes from "./NftLottery.module.css";
+import { images } from "../../Assets/reduced";
 
 import nft1 from "../../Assets/nft1.jpg";
 import nft2 from "../../Assets/nft2.jpg";
@@ -137,7 +138,9 @@ const NftLottery = (props) => {
   ];
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  let { Nftlotto, chainId, nft } = useSelector((state) => state.common);
+  let { Nftlotto, chainId, nft, userNfts } = useSelector(
+    (state) => state.common
+  );
 
   const navigate = useNavigate();
 
@@ -154,13 +157,7 @@ const NftLottery = (props) => {
   };
 
   const NftsList = () => {
-    let items = [];
-    for (let i = 1; i <= nft.minted; i++) {
-      items.push({
-        image: `https://ipfs.io/ipfs/QmVCGNS2DnwDrrdL9MwAjDRD7JSWjJGoWJ4qG59if687Ew/${i}.jpg`,
-      });
-    }
-    return items.map((el, index) => <NftSmallItem key={index} item={el} />);
+    return userNfts.map((el, index) => <NftSmallItem key={index} item={el} />);
   };
 
   useEffect(() => {

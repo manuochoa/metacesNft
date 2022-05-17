@@ -28,6 +28,7 @@ let initialState = {
     baseURI: "",
     price: "",
   },
+  userNfts: [],
   staking: [
     {
       daily_back: "",
@@ -106,6 +107,7 @@ let commonReducer = (state = initialState, action) => {
         acesBalance: action.payload.acesBalance,
         bnbBalance: action.payload.bnbBalance,
         userEntries: action.payload.userEntries,
+        userNfts: action.payload.userNfts,
       };
     case "UPDATE_CHAIN":
       return {

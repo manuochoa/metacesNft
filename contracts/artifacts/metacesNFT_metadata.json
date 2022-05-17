@@ -377,7 +377,7 @@
 					},
 					{
 						"internalType": "bytes",
-						"name": "_data",
+						"name": "data",
 						"type": "bytes"
 					}
 				],
@@ -692,18 +692,18 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
 	},
 	"sources": {
 		"NFT.sol": {
-			"keccak256": "0x29717b4957880da2726dea28dae78b4372e111efc93eb9cb4e356adbf0920305",
+			"keccak256": "0x43151d12604fe64ca27057c6dea9b4465d88b684eb7b880b9af6f7a471cf5e27",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e82645736f20476d51d681febf845a06de2a4f7b164b4f4ae8a0d8f6ae8c87c5",
-				"dweb:/ipfs/QmZWSQmyy18qoFE7EQj8WiHev8xJyV7o2uw2uwXaKU2GMf"
+				"bzz-raw://c16a685bc124e5439e14333217b42da692cc8c4737614b5823c7f51ae8dc193a",
+				"dweb:/ipfs/QmYageXRUyzpmusLxPUK7HNAtNcw4ziDhpJjbhLQbbzosu"
 			]
 		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol": {
@@ -715,11 +715,11 @@
 			]
 		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol": {
-			"keccak256": "0x6bb2e941cd08fe78cd5e39c625c9bcc340e28f319ebd1a1ecc404d823c67c4df",
+			"keccak256": "0x6eb7717b3fed3cd34685c2f9b3500168d77e90fafe0b6f891d4d7e2381aa6061",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0398761e870a886e8e0fee7b80a656cea8972da389cdf9449c0a172c5050c87e",
-				"dweb:/ipfs/QmNmMx8WsLAiGQ8Kgb32sF7jgNV4RgWYQvBnskV9jmngAn"
+				"bzz-raw://18c6d80a2d3b9e35d2f358a901ea8ab3c77f3eab30083d9dd85aed42438c0aee",
+				"dweb:/ipfs/QmPqFjCEwthAz2DdgaAxSox6axWhb2rVvUA6xNS6NUfiZG"
 			]
 		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721.sol": {
@@ -779,11 +779,11 @@
 			]
 		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Strings.sol": {
-			"keccak256": "0x32c202bd28995dd20c4347b7c6467a6d3241c74c8ad3edcbb610cd9205916c45",
+			"keccak256": "0xca92905e1626e8567483de21bc1208284865ed7be71d54ca320a140ac25fd290",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8179c356adb19e70d6b31a1eedc8c5c7f0c00e669e2540f4099e3844c6074d30",
-				"dweb:/ipfs/QmWFbivarEobbqhS1go64ootVuHfVohBseerYy9FTEd1W2"
+				"bzz-raw://53c8d5bc6af499853ddf86eb2a6d7448f18a78313a04b8652a83007d04954577",
+				"dweb:/ipfs/QmQV6pF3FQoqR16kSK9FNg6bKfWLbcfHBTCKS7p2ERTkEF"
 			]
 		},
 		"https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/introspection/ERC165.sol": {
