@@ -18,7 +18,7 @@ import CustomButton from "../../Components/UI/Button/CustomButton";
 import { useDispatch, useSelector } from "react-redux";
 import { initAction } from "../../Redux/reduxActions";
 
-const stakeRows = ["Period", "Daily Back", "APY", "Earnings", "Action"];
+const stakeRows = ["Period", "Daily Back", "Earnings", "Action"];
 const percents = [25, 50, 75, 100];
 
 const Stacking = (props) => {
