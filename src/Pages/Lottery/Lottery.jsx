@@ -215,11 +215,13 @@ const Lottery = (props) => {
   }, []);
 
   useEffect(() => {
-    if (chainId !== 56) {
-      window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x38" }],
-      });
+    if (window.ethereum) {
+      if (chainId !== 56) {
+        window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0x38" }],
+        });
+      }
     }
 
     return () => clearTimeout(timer);

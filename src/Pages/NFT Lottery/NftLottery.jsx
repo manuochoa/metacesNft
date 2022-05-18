@@ -161,11 +161,13 @@ const NftLottery = (props) => {
   };
 
   useEffect(() => {
-    if (chainId !== 1) {
-      window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: "0x1" }],
-      });
+    if (window.ethereum) {
+      if (chainId !== 1) {
+        window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0x1" }],
+        });
+      }
     }
   }, []);
 
