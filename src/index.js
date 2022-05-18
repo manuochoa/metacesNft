@@ -7,7 +7,6 @@ import store from "./Redux/reduxStore";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import { createRoot } from "react-dom/client";
-import { MoralisProvider } from "react-moralis";
 
 let persistor = persistStore(store);
 
@@ -17,12 +16,7 @@ const root = createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-      <MoralisProvider
-        serverUrl="https://t1dgflyg2uft.bigmoralis.com:2053/server"
-        appId="q6NZenv0ACYx24jH2tfz1ZrQSNhyLRUqDmofDy3f"
-      >
-        <App />
-      </MoralisProvider>
+      <App />
     </PersistGate>
   </Provider>
 );

@@ -12,7 +12,6 @@ import {
 } from "../abis/abis";
 import { getQuote } from "../blockchain/functions";
 import { images } from "../Assets/reduced";
-import { useSelector } from "react-redux";
 
 const updateUser = (payload) => {
   return {
