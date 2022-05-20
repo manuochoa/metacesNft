@@ -68,7 +68,7 @@ const tokens = [
 ];
 
 let owner = "0xf97ceD46126B30fe7d8Dfe1b185f80f7D4956109";
-let admin1 = "";
+let admin1 = "0xf97ceD46126B30fe7d8Dfe1b185f80f7D4956109";
 let admin2 = "0x153B202F6C6e570f13C27371CdA6Ae2c8768Dca6";
 
 const Lottery = (props) => {

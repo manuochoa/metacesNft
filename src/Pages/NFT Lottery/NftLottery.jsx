@@ -174,11 +174,11 @@ const NftLottery = (props) => {
   return (
     <div className={classes.main}>
       <LeftSide className={classes.left}>
-        <CurrentJackpot
+        {/* <CurrentJackpot
           cash={Nftlotto.jackpot}
           actionText={"Mint Now"}
           onClick={onClick}
-        />
+        /> */}
         <div className={classes.table}>
           <TabTable items={Nftlotto.addresses} winners={Nftlotto.results} />
         </div>
